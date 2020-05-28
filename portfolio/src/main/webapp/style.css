@@ -10,45 +10,17 @@
 
 body {
   background-color: #fbfcfc;
+  font-family: 'Roboto', sans-serif;
 }
 
-
-
-/* The actual popup (appears on top) */
-/*
+/* Popup styling */
 #popup {
+  font-size: .8em;
   visibility: hidden;
-  width: 160px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 8px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -80px;
-}
-*/
-#popup {
-  visibility: hidden;
-  width: 160px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  margin-left: -80px;
-  z-index: 1;
-  padding: 5px;
-  bottom: 10%;
 }
 
-/* Toggle this class when clicking on the popup container (hide and show the popup) */
 #popup.show {
   visibility: visible;
-  -webkit-animation: fadeIn 1s;
-  animation: fadeIn 1s
 }
 
 
