@@ -85,7 +85,6 @@ body {
 #slideshow-content-container img {
   border: 1px solid black;
   border-radius: 5px;
-  margin-bottom: 30px;
   margin-left: auto;
   margin-right: auto;
   height: 450px;
@@ -93,6 +92,7 @@ body {
 
 #slideDescription {
   margin: 10px;
-  font-size: .8em;
+  margin-bottom: 30px;
+  font-size: 1.2em;
   color: black;
 }

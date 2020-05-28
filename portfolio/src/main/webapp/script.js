@@ -29,18 +29,21 @@ function addRandomGreeting() {
 
 
 const images =
-    ['JessDeJong-photo.png', 'Profile_photo_Jess.jpg'];
+    ['basketball.JPG', 'chess.JPG', 'crochet.JPG', 'smoothie.jpg', 'statefarm.JPG',
+    'tennis.JPG', 'UIL_state.JPG', "Uke.jpg"];
 
 const descriptions =
-    ['This is a photo of myself', 'This is another photo of myself'];
+    ['Playing basketball with the Tennis Intramural Team!', 'Playing chess with my roommate!',
+    'Crocheting simple beanies!', 'Making delicious smoothies!', 'State Farm Internship!',
+    'Tennis, with the Club Team at UT Austin!', 'Competitive Programming!', 'Playing the Ukulele!'];
 
 let slideShowIndex = 0;
 
 /* Onload, initalize slide show with an image */
 function initializeSlideShow() {
   // display the first image in the slideshow
-  let firstImageURL = 'images/JessDeJong-photo.png';
-  let firstDescription = 'This is a photo of myself';
+  let firstImageURL = 'images/basketball.JPG';
+  let firstDescription = 'Playing basketball with the Tennis Intramural Team!';
   displayNewSlide(firstImageURL, firstDescription);
 }
 
