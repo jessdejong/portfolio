@@ -4,37 +4,54 @@
     <meta charset="UTF-8">
     <title>Jess DeJong - STEP Intern</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     <script src="script.js"></script>
   </head>
   <body>
-    <div class="header">
+    <ul class="header">
       <img src="images/Profile_photo_Jess.jpg" alt="Profile photo of Jess" height="250">
       <h1>Jess's Portfolio</h1>
-      <strong>
-        <a href="#">About Me</a>
-        <a href="#">Projects</a>
-        <a href="#">Experience</a>
-        <a href="#">Hobbies</a>
-        <a href="#">Socials & Contact</a>
-      </strong>
-    </div>
+      <b>
+        <li>
+          <a href="#">About Me</a>
+        </li>
+        <li>
+          <a href="#">Projects & Experience</a>
+        </li>
+        <li>
+          <a href="#">Hobbies</a>
+        </li>
+        <li>
+          <a href="#" onclick="togglePopup()">Socials & Contact</a>
+          <span id="popup">
+            <a href="mailto:jessdejong843@gmail.com" target="_blank">Email</a>
+            <a href="https://linkedin.com/in/jess-dejong" target="_blank">LinkedIn</a>
+            <a href="https://instagram.com/jess.dejong" target="_blank">Instagram</a>
+            <a href="https://github.com/jessdejong" target="_blank">GitHub</a>
+          </span>
+        </li>
+      </b>
+    </ul>
 
     <div id="content">
       <h1>Jess's Portfolio</h1>
-      
-      <img src="images/JessDeJong-photo.png" alt="Profile photo with my twin" height="250">
-      <img src="images/Profile_photo_Jess.jpg" alt="Profile photo of Jess" height="250">
-
-      <p>If you're here, you probably already know that I'm a <strong>Google STEP intern</strong>. 
-      However, I'm also frequently described as an <strong>Incoming Sophomore at UT Austin</strong>, 
-      a <strong>CS and Math Double Major</strong>, a <strong>fraternal twin</strong>, an 
-      <strong>amateur unicyclist</strong>, and a <strong>tennis enthusiast</strong>. When I work, 
-      I describe myself as a <strong>curious developer</strong>. In the future, I hope to become 
-      a <strong>decent ukulelist</strong>, a <strong>strong writer</strong>, and eventually, a 
-      <strong>full-time software developer</strong>.
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+      <div class="speech-bubble">
+        <div class="arrow"></div>
+        <p>
+          If you're here, you probably already know that I'm a <b>Google STEP intern</b>. 
+          However, I'm also frequently described as an <b>Incoming Sophomore at UT Austin</b>, 
+          a <b>CS and Math Double Major</b>, a <b>fraternal twin</b>, an 
+          <b>amateur unicyclist</b>, and a <b>tennis enthusiast</b>. When I work, 
+          I describe myself as a <b>curious developer</b>. In the future, I hope to become 
+          a <b>decent ukulelist</b>, a <b>strong writer</b>, and eventually, a 
+          <b>full-time software developer</b>.
+        </p>
+        <p>
+          Click here to get a random message:
+        </p>
+        <button onclick="addRandomGreeting()">Hello</button>
+        <div id="greeting-container"></div>
+      </div>
     </div>
   </body>
 </html>
