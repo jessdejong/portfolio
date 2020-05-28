@@ -23,7 +23,7 @@ function addRandomGreeting() {
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
+  const greetingContainer = document.getElementById('greetingContainer');
   greetingContainer.innerText = greeting;
 }
 
@@ -80,7 +80,7 @@ function displayNewSlide(imageURL, descriptionText) {
   // display slide/image on slideshow
   const imgElement = document.createElement('img');
   imgElement.src = imageURL;
-  const imageContainer = document.getElementById('slideshow-content-container');
+  const imageContainer = document.getElementById('slideshowContentContainer');
   imageContainer.innerHTML = '';
   imageContainer.appendChild(imgElement);
 
