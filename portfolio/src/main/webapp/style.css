@@ -13,6 +13,8 @@ body {
 }
 
 
+/* TODO: alphabetize css properties */
+
 /* Styling the header */
 
 .header {
@@ -24,6 +26,11 @@ body {
   width: 750px;
 }
 
+.header li {
+  display: inline-block;
+  list-style: none;
+}
+
 /* Stylize image in header as a profile photo */
 
 .header img {
@@ -31,7 +38,6 @@ body {
   border-radius: 70%;
   border: 2px solid black;
   height: 150px;
-  width: 150px;
   margin-right: 20px;
 }
 
@@ -44,7 +50,7 @@ body {
   text-align: center;
   padding: 12px;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 1.1em;
   line-height: 25px;
   border-radius: 4px;
 }
