@@ -28,15 +28,18 @@ function addRandomGreeting() {
 }
 
 
-<<<<<<< HEAD
 const images =
     ['basketball.jpg', 'chess.jpg', 'crochet.jpg', 'smoothie.jpg', 'statefarm.jpg',
-    'tennis.jpg', 'UIL_state.jpg', "Uke.jpg"];
+    'tennis.jpg', 'UIL_state.jpg', 'Uke.jpg'];
 
 const descriptions =
     ['Playing basketball with the Tennis Intramural Team!', 'Playing chess with my roommate!',
     'Crocheting simple beanies!', 'Making delicious smoothies!', 'State Farm Internship!',
     'Tennis, with the Club Team at UT Austin!', 'Competitive Programming!', 'Playing the Ukulele!'];
+
+const DIRECTION_UP = 'up';
+const DIRECTION_DOWN = 'down';
+const RANDOM_SLIDE = 'random';
 
 let slideShowIndex = 0;
 
@@ -50,7 +53,7 @@ function initializeSlideShow() {
 
 /* Navigate to the slide at slideShowIndex - 1 */
 function previousSlide() {
-  updateSlideShowIndex('down');
+  updateSlideShowIndex(DIRECTION_DOWN);
   let imageURL = 'images/' + images[slideShowIndex];
   let descriptionText = descriptions[slideShowIndex];
   displayNewSlide(imageURL, descriptionText);
@@ -58,7 +61,7 @@ function previousSlide() {
 
 /* Navigate to the slide at slideShowIndex + 1 */
 function nextSlide() {
-  updateSlideShowIndex('up');
+  updateSlideShowIndex(DIRECTION_UP);
   let imageURL = 'images/' + images[slideShowIndex];
   let descriptionText = descriptions[slideShowIndex];
   displayNewSlide(imageURL, descriptionText);
@@ -66,7 +69,7 @@ function nextSlide() {
 
 /* Navigate to a random slide */
 function randomSlide() {
-  updateSlideShowIndex('random');
+  updateSlideShowIndex(RANDOM_SLIDE);
   let imageURL = 'images/' + images[slideShowIndex];
   let descriptionText = descriptions[slideShowIndex];
   displayNewSlide(imageURL, descriptionText);
@@ -92,22 +95,22 @@ function displayNewSlide(imageURL, descriptionText) {
 
 /* Navigating the Slideshow with an index */
 function updateSlideShowIndex(direction) {
-  if (direction == 'up') {
+  if (direction == DIRECTION_UP) {
     slideShowIndex = (slideShowIndex + 1) % images.length;
   }
-  else if (direction == 'down') {
+  else if (direction == DIRECTION_DOWN) {
     slideShowIndex = slideShowIndex - 1;
     if (slideShowIndex < 0) {
       slideShowIndex += images.length;
     }
   }
-  else if (direction == 'random') {
+  else if (direction == RANDOM_SLIDE) {
     slideShowIndex = Math.floor(Math.random() * images.length);
   }
-=======
+}
+
 function togglePopup() {
   var popup = document.getElementById("popup");
   popup.classList.toggle("show");
   console.log(popup);
->>>>>>> master
 }
