@@ -36,6 +36,7 @@ const descriptions =
 
 let slideShowIndex = 0;
 
+/* Onload, initalize slide show with an image */
 function initializeSlideShow() {
   // display the first image in the slideshow
   let firstImageURL = 'images/JessDeJong-photo.png';
@@ -43,6 +44,7 @@ function initializeSlideShow() {
   displayNewSlide(firstImageURL, firstDescription);
 }
 
+/* Navigate to the slide at slideShowIndex - 1 */
 function previousSlide() {
   updateSlideShowIndex('down');
   let imageURL = 'images/' + images[slideShowIndex];
@@ -50,6 +52,7 @@ function previousSlide() {
   displayNewSlide(imageURL, descriptionText);
 }
 
+/* Navigate to the slide at slideShowIndex + 1 */
 function nextSlide() {
   updateSlideShowIndex('up');
   let imageURL = 'images/' + images[slideShowIndex];
@@ -57,6 +60,7 @@ function nextSlide() {
   displayNewSlide(imageURL, descriptionText);
 }
 
+/* Navigate to a random slide */
 function randomSlide() {
   updateSlideShowIndex('random');
   let imageURL = 'images/' + images[slideShowIndex];
@@ -64,6 +68,7 @@ function randomSlide() {
   displayNewSlide(imageURL, descriptionText);
 }
 
+/* Display slideshow, with correctly navigated content */
 function displayNewSlide(imageURL, descriptionText) {
   // display slide/image on slideshow
   const imgElement = document.createElement('img');
@@ -81,6 +86,7 @@ function displayNewSlide(imageURL, descriptionText) {
   console.log(paragraph);
 }
 
+/* Navigating the Slideshow with an index */
 function updateSlideShowIndex(direction) {
   if (direction == 'up') {
     slideShowIndex = (slideShowIndex + 1) % images.length;
