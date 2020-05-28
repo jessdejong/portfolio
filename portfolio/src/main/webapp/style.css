@@ -107,3 +107,11 @@ body {
   background-color: blue;
   color: orange;
 }
+
+/* Styling layout cards */
+.card {
+  margin: 20px;
+  margin-left: 0px;
+  position: relative;
+  padding-right: 20px;
+}
