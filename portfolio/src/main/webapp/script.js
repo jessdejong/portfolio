@@ -26,3 +26,49 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+
+const images =
+    ['JessDeJong-photo.png', 'Profile_photo_Jess.jpg'];
+
+let slideShowIndex = 0;
+
+function initializeSlideShow() {
+  // display the first image in the slideshow
+  const imgElement = document.createElement('img');
+  imgElement.src = 'images/JessDeJong-photo.png';
+  const imageContainer = document.getElementById('slideshow-content-container');
+  imageContainer.appendChild(imgElement);
+}
+
+function previousSlide() {
+  updateSlideShowIndex('down');
+  let imageURL = 'images/' + images[slideShowIndex];
+  displayNewSlide(imageURL);
+}
+
+function nextSlide() {
+  updateSlideShowIndex('up');
+  let imageURL = 'images/' + images[slideShowIndex];
+  displayNewSlide(imageURL);
+}
+
+function displayNewSlide(imageURL) {
+  const imgElement = document.createElement('img');
+  imgElement.src = imageURL;
+  const imageContainer = document.getElementById('slideshow-content-container');
+  imageContainer.innerHTML = '';
+  imageContainer.appendChild(imgElement);
+}
+
+function updateSlideShowIndex(direction) {
+  if (direction == 'up') {
+    slideShowIndex = (slideShowIndex + 1) % images.length;
+  }
+  else if (direction == 'down') {
+    slideShowIndex = slideShowIndex - 1;
+    if (slideShowIndex < 0) {
+      slideShowIndex += images.length;
+    }
+  }
+}
