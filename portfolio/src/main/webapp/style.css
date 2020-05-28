@@ -1,3 +1,4 @@
+/* Basic layout and overall site design */
 #content {
   margin-left: auto;
   margin-right: auto;
@@ -12,9 +13,41 @@ body {
   background-color: #fbfcfc;
 }
 
+/* Stylizing div as a speech bubble */
+.speech-bubble {
+  background-color: #f8f8f8;
+  border: 2px solid #c8c8c8;
+  border-radius: 10px;
+  padding: 20px;
+  position: absolute;
+  text-align:center;
+  width: 500px;
+}
+
+/* Adding arrow to speech bubble */
+.speech-bubble .arrow {
+  border-style: solid;
+  position: absolute;
+}
+
+.arrow {
+  border-color: transparent transparent #c8c8c8 transparent;
+  border-width: 0px 15px 15px 15px;
+  left: 50px;
+  top: -15px;
+}
+
+.arrow:after {
+  border-color: transparent transparent #f8f8f8 transparent;
+  border-style: solid;
+  border-width: 0px 13px 13px 13px;
+  content: "";
+  left: -13px;
+  position: absolute;
+  top: 3px;
+}
 
 /* Styling the header */
-
 .header {
   overflow: hidden;
   background-color: #fbfcfc;
@@ -25,7 +58,6 @@ body {
 }
 
 /* Stylize image in header as a profile photo */
-
 .header img {
   float: left;
   border-radius: 70%;
@@ -36,7 +68,6 @@ body {
 }
 
 /* Interactive header links */
-
 .header a {
   margin-left: 5px;
   float: left;
