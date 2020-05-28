@@ -53,6 +53,12 @@ function nextSlide() {
   displayNewSlide(imageURL);
 }
 
+function randomSlide() {
+  updateSlideShowIndex('random');
+  let imageURL = 'images/' + images[slideShowIndex];
+  displayNewSlide(imageURL);
+}
+
 function displayNewSlide(imageURL) {
   const imgElement = document.createElement('img');
   imgElement.src = imageURL;
@@ -70,5 +76,8 @@ function updateSlideShowIndex(direction) {
     if (slideShowIndex < 0) {
       slideShowIndex += images.length;
     }
+  }
+  else if (direction == 'random') {
+    slideShowIndex = Math.floor(Math.random() * images.length);
   }
 }

@@ -58,3 +58,53 @@ body {
   background-color: blue;
   color: orange;
 }
+
+
+/* Styling the slideshow */
+.slideShowNavigation {
+  background-color: white;
+  color: white;
+  width: 400px;
+}
+
+
+.slideshowNavigation button {
+  margin: 20px;  
+  margin-top: 0px;
+  background-color: dodgerblue;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1em;
+  width: 100px;
+}
+
+/*
+#nextButton {
+  float: right;
+  margin-right: 15%;
+}
+
+#previousButton {
+  float: left;
+}
+
+#randomButton {
+}
+*/
+
+#slideshow-content-container img {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 450px;
+}
+
+
