@@ -1,3 +1,5 @@
+/* Basic layout and overall site design */
+
 #content {
   margin-left: auto;
   margin-right: auto;
@@ -8,6 +10,8 @@
   margin-top: 20px;
 }
 
+/* Stylizing div as a speech bubble */
+
 .speech-bubble {
   background-color: #f8f8f8;
   border: 2px solid #c8c8c8;
@@ -17,6 +21,8 @@
   text-align:center;
   width: 500px;
 }
+
+/* Adding arrow to speech bubble */
 
 .speech-bubble .arrow {
   border-style: solid;
