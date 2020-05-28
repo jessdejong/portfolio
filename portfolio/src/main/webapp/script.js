@@ -27,15 +27,16 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
-
-const images =
-    ['basketball.jpg', 'chess.jpg', 'crochet.jpg', 'smoothie.jpg', 'statefarm.jpg',
-    'tennis.jpg', 'UIL_state.jpg', 'Uke.jpg'];
-
-const descriptions =
-    ['Playing basketball with the Tennis Intramural Team!', 'Playing chess with my roommate!',
-    'Crocheting simple beanies!', 'Making delicious smoothies!', 'State Farm Internship!',
-    'Tennis, with the Club Team at UT Austin!', 'Competitive Programming!', 'Playing the Ukulele!'];
+const images = [
+  {name: 'basketball.jpg', label: 'Playing basketball with the Tennis Intramural Team!'},
+  {name: 'chess.jpg', label: 'Playing chess with my roommate!'},
+  {name: 'crochet.jpg', label: 'Crocheting simple beanies!'},
+  {name: 'smoothie.jpg', label: 'Making delicious smoothies!'},
+  {name: 'statefarm.jpg', label: 'State Farm Internship!'},
+  {name: 'tennis.jpg', label: 'Tennis, with the Club Team at UT Austin!'},
+  {name: 'UIL_state.jpg', label: 'Competitive Programming!'},
+  {name: 'Uke.jpg', label: 'Playing the Ukulele!'}
+]
 
 const DIRECTION_UP = 'up';
 const DIRECTION_DOWN = 'down';
@@ -43,54 +44,42 @@ const RANDOM_SLIDE = 'random';
 
 let slideShowIndex = 0;
 
-/* Onload, initalize slide show with an image */
-function initializeSlideShow() {
-  // display the first image in the slideshow
-  let firstImageURL = 'images/basketball.jpg';
-  let firstDescription = 'Playing basketball with the Tennis Intramural Team!';
-  displayNewSlide(firstImageURL, firstDescription);
-}
-
 /* Navigate to the slide at slideShowIndex - 1 */
 function previousSlide() {
   updateSlideShowIndex(DIRECTION_DOWN);
-  let imageURL = 'images/' + images[slideShowIndex];
-  let descriptionText = descriptions[slideShowIndex];
-  displayNewSlide(imageURL, descriptionText);
+  let image = images[slideShowIndex];
+  displayNewSlide(image);
 }
 
 /* Navigate to the slide at slideShowIndex + 1 */
 function nextSlide() {
   updateSlideShowIndex(DIRECTION_UP);
-  let imageURL = 'images/' + images[slideShowIndex];
-  let descriptionText = descriptions[slideShowIndex];
-  displayNewSlide(imageURL, descriptionText);
+  let image = images[slideShowIndex];
+  displayNewSlide(image);
 }
 
 /* Navigate to a random slide */
 function randomSlide() {
   updateSlideShowIndex(RANDOM_SLIDE);
-  let imageURL = 'images/' + images[slideShowIndex];
-  let descriptionText = descriptions[slideShowIndex];
-  displayNewSlide(imageURL, descriptionText);
+  let image = images[slideShowIndex];
+  displayNewSlide(image);
 }
 
 /* Display slideshow, with correctly navigated content */
-function displayNewSlide(imageURL, descriptionText) {
+function displayNewSlide(image) {
   // display slide/image on slideshow
   const imgElement = document.createElement('img');
-  imgElement.src = imageURL;
+  imgElement.src = 'images/' + image.name;
   const imageContainer = document.getElementById('slideshowContentContainer');
   imageContainer.innerHTML = '';
   imageContainer.appendChild(imgElement);
 
   // display corresponding description text
   const paragraph = document.createElement('p');
-  paragraph.appendChild(document.createTextNode(descriptionText));
+  paragraph.appendChild(document.createTextNode(image.label));
   const descriptionContainer = document.getElementById('slideDescription');
   descriptionContainer.innerHTML = '';
   descriptionContainer.appendChild(paragraph);
-  console.log(paragraph);
 }
 
 /* Navigating the Slideshow with an index */
