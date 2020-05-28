@@ -31,40 +31,54 @@ function addRandomGreeting() {
 const images =
     ['JessDeJong-photo.png', 'Profile_photo_Jess.jpg'];
 
+const descriptions =
+    ['This is a photo of myself', 'This is another photo of myself'];
+
 let slideShowIndex = 0;
 
 function initializeSlideShow() {
   // display the first image in the slideshow
-  const imgElement = document.createElement('img');
-  imgElement.src = 'images/JessDeJong-photo.png';
-  const imageContainer = document.getElementById('slideshow-content-container');
-  imageContainer.appendChild(imgElement);
+  let firstImageURL = 'images/JessDeJong-photo.png';
+  let firstDescription = 'This is a photo of myself';
+  displayNewSlide(firstImageURL, firstDescription);
 }
 
 function previousSlide() {
   updateSlideShowIndex('down');
   let imageURL = 'images/' + images[slideShowIndex];
-  displayNewSlide(imageURL);
+  let descriptionText = descriptions[slideShowIndex];
+  displayNewSlide(imageURL, descriptionText);
 }
 
 function nextSlide() {
   updateSlideShowIndex('up');
   let imageURL = 'images/' + images[slideShowIndex];
-  displayNewSlide(imageURL);
+  let descriptionText = descriptions[slideShowIndex];
+  displayNewSlide(imageURL, descriptionText);
 }
 
 function randomSlide() {
   updateSlideShowIndex('random');
   let imageURL = 'images/' + images[slideShowIndex];
-  displayNewSlide(imageURL);
+  let descriptionText = descriptions[slideShowIndex];
+  displayNewSlide(imageURL, descriptionText);
 }
 
-function displayNewSlide(imageURL) {
+function displayNewSlide(imageURL, descriptionText) {
+  // display slide/image on slideshow
   const imgElement = document.createElement('img');
   imgElement.src = imageURL;
   const imageContainer = document.getElementById('slideshow-content-container');
   imageContainer.innerHTML = '';
   imageContainer.appendChild(imgElement);
+
+  // display corresponding description text
+  const paragraph = document.createElement('p');
+  paragraph.appendChild(document.createTextNode(descriptionText));
+  const descriptionContainer = document.getElementById('slideDescription');
+  descriptionContainer.innerHTML = '';
+  descriptionContainer.appendChild(paragraph);
+  console.log(paragraph);
 }
 
 function updateSlideShowIndex(direction) {
