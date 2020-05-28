@@ -11,6 +11,17 @@
 
 body {
   background-color: #fbfcfc;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Popup styling */
+#popup {
+  font-size: .8em;
+  visibility: hidden;
+}
+
+#popup.show {
+  visibility: visible;
 }
 
 /* Stylizing div as a speech bubble */
@@ -23,6 +34,8 @@ body {
   text-align:center;
   width: 500px;
 }
+
+/* TODO: alphabetize css properties */
 
 /* Adding arrow to speech bubble */
 .speech-bubble .arrow {
@@ -51,10 +64,16 @@ body {
 .header {
   overflow: hidden;
   background-color: #fbfcfc;
+  font-weight: bold;
   padding: 20px 10px;
   margin-left: auto;
   margin-right:auto;
   width: 750px;
+}
+
+.header li {
+  display: inline-block;
+  list-style: none;
 }
 
 /* Stylize image in header as a profile photo */
@@ -63,7 +82,6 @@ body {
   border-radius: 70%;
   border: 2px solid black;
   height: 150px;
-  width: 150px;
   margin-right: 20px;
 }
 
@@ -75,7 +93,7 @@ body {
   text-align: center;
   padding: 12px;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 1.1em;
   line-height: 25px;
   border-radius: 4px;
 }
