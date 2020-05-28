@@ -28,9 +28,10 @@ function addRandomGreeting() {
 }
 
 
+<<<<<<< HEAD
 const images =
-    ['basketball.JPG', 'chess.JPG', 'crochet.JPG', 'smoothie.jpg', 'statefarm.JPG',
-    'tennis.JPG', 'UIL_state.JPG', "Uke.jpg"];
+    ['basketball.jpg', 'chess.jpg', 'crochet.jpg', 'smoothie.jpg', 'statefarm.jpg',
+    'tennis.jpg', 'UIL_state.jpg', "Uke.jpg"];
 
 const descriptions =
     ['Playing basketball with the Tennis Intramural Team!', 'Playing chess with my roommate!',
@@ -42,7 +43,7 @@ let slideShowIndex = 0;
 /* Onload, initalize slide show with an image */
 function initializeSlideShow() {
   // display the first image in the slideshow
-  let firstImageURL = 'images/basketball.JPG';
+  let firstImageURL = 'images/basketball.jpg';
   let firstDescription = 'Playing basketball with the Tennis Intramural Team!';
   displayNewSlide(firstImageURL, firstDescription);
 }
@@ -103,4 +104,10 @@ function updateSlideShowIndex(direction) {
   else if (direction == 'random') {
     slideShowIndex = Math.floor(Math.random() * images.length);
   }
+=======
+function togglePopup() {
+  var popup = document.getElementById("popup");
+  popup.classList.toggle("show");
+  console.log(popup);
+>>>>>>> master
 }
