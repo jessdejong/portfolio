@@ -8,17 +8,38 @@
     <script src="script.js"></script>
   </head>
   <body>
-    <div class="header">
+    <ul class="header">
       <img src="images/Profile_photo_Jess.jpg" alt="Profile photo of Jess" height="250">
       <h1>Jess's Portfolio</h1>
-      <strong>
-        <a href="#">About Me</a>
-        <a href="#">Projects</a>
-        <a href="#">Experience</a>
-        <a href="#">Hobbies</a>
-        <a href="#">Socials & Contact</a>
-      </strong>
-    </div>
+      <li>
+        <a href="index.html">About Me</a>
+      </li>
+      <li>
+        <a href="projects_experience.html">Projects & Experience</a>
+      </li>
+      <li>
+        <a href="hobbies.html">Hobbies</a>
+      </li>
+      <li>
+        <a href="#" onclick="togglePopup()">Socials & Contact</a>
+      </li>
+      <li>
+        <ul id="popup">
+          <li>
+            <a href="mailto:jessdejong843@gmail.com" target="_blank">Email</a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/jess-dejong" target="_blank">LinkedIn</a>
+          </li>
+          <li>
+            <a href="https://instagram.com/jess.dejong" target="_blank">Instagram</a>
+          </li>
+          <li>
+            <a href="https://github.com/jessdejong" target="_blank">GitHub</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
     <div id="content">
       <h1>My Hobbies</h1>
       <h2>In a Slide-show!</h2>
