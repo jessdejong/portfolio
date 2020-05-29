@@ -35,7 +35,13 @@ body {
   width: 500px;
 }
 
-/* TODO: alphabetize css properties */
+/* Styling layout cards */
+.card {
+  margin: 20px;
+  margin-left: 0px;
+  padding-right: 20px;
+  position: relative;
+}
 
 /* Adding arrow to speech bubble */
 .speech-bubble .arrow {
@@ -62,12 +68,12 @@ body {
 
 /* Styling the header */
 .header {
-  overflow: hidden;
   background-color: #fbfcfc;
   font-weight: bold;
-  padding: 20px 10px;
   margin-left: auto;
   margin-right:auto;
+  overflow: hidden;
+  padding: 20px 10px;
   width: 750px;
 }
 
@@ -78,24 +84,24 @@ body {
 
 /* Stylize image in header as a profile photo */
 .header img {
-  float: left;
-  border-radius: 70%;
   border: 2px solid black;
+  border-radius: 70%;
+  float: left;
   height: 150px;
   margin-right: 20px;
 }
 
 /* Interactive header links */
 .header a {
-  margin-left: 5px;
-  float: left;
   color: black;
-  text-align: center;
-  padding: 12px;
-  text-decoration: none;
+  border-radius: 4px;
+  float: left;
   font-size: 1.1em;
   line-height: 25px;
-  border-radius: 4px;
+  margin-left: 5px;
+  padding: 12px;
+  text-align: center;
+  text-decoration: none;
 }
 
 .header a:hover {
@@ -106,12 +112,4 @@ body {
 .header a.active {
   background-color: blue;
   color: orange;
-}
-
-/* Styling layout cards */
-.card {
-  margin: 20px;
-  margin-left: 0px;
-  position: relative;
-  padding-right: 20px;
 }
