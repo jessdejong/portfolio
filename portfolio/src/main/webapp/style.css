@@ -126,7 +126,7 @@ body {
   width: 400px;
 }
 
-.slideshowNavigation button {
+.buttonStyle {
   background-color: dodgerblue;
   border: none;
   border-radius: 5px;
@@ -136,10 +136,11 @@ body {
   margin: 20px;  
   margin-top: 0px;
   padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
   padding-top: 10px;
   text-align: center;
   text-decoration: none;
-  width: 100px;
 }
 
 #slideshowContentContainer img {
