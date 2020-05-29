@@ -76,6 +76,11 @@ body {
   list-style: none;
 }
 
+.popup li {
+  display: inline-block;
+  list-style: none;
+}
+
 /* Stylize image in header as a profile photo */
 .header img {
   float: left;
