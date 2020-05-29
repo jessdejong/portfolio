@@ -12,6 +12,92 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+const TRANSFORM = 'transform';
+const FILTER = 'filter';
+const RESET = 'reset';
+
+// image manipulation values
+let rotationAngle = 0;
+let fractionInverted = 0;
+let radiusBlurred = 0;
+let brightness = 1;
+let grayscale = 0;
+let hueValue = 0;
+let opacityValue = 1;
+
+/**
+ * Functions that manipulate
+ * my profile picture.
+ */
+
+function rotateProfilePicture() {
+  rotationAngle += 90;
+  let value = 'rotate(' + rotationAngle + 'deg)';
+  changeProfilePicture(TRANSFORM, value);
+}
+
+function invertProfilePicture() {
+  fractionInverted += .2;
+  let value = 'invert(' + fractionInverted + ')';
+  changeProfilePicture(FILTER, value);
+}
+
+function blurProfilePicture() {
+  radiusBlurred += 2;
+  let value = 'blur(' + radiusBlurred + 'px)';
+  changeProfilePicture(FILTER, value);
+}
+
+function brightenProfilePicture() {
+  brightness += .2;
+  let value = 'brightness(' + brightness + ')';
+  changeProfilePicture(FILTER, value);
+}
+
+function grayProfilePicture() {
+  grayscale += .2;
+  let value = 'grayscale(' + grayscale + ')';
+  changeProfilePicture(FILTER, value);
+}
+
+function hueRotateProfilePicture() {
+  hueValue += 45;
+  let value = 'hue-rotate(' + hueValue + 'deg)';
+  changeProfilePicture(FILTER, value);
+}
+
+function opacityProfilePicture() {
+  opacityValue -= .2;
+  let value = 'opacity(' + opacityValue + ')';
+  changeProfilePicture(FILTER, value);
+}
+
+
+/* Reset the profile picture */
+function resetProfilePicture() {
+  let value = 'none';
+  changeProfilePicture(RESET, value);
+}
+
+/* Performs the image manipulation */
+function changeProfilePicture(property, value) {
+  let image = document.getElementById('profilePicture');
+  switch(property) {
+    case TRANSFORM: 
+      image.style.transform = value;
+      break;
+    case FILTER:
+      image.style.filter = value;
+      break;
+    case RESET:
+      image.style.transform = value;
+      image.style.filter = value;
+      break;
+    default:
+      throw new Error('Invalid parameter passed to changeProfilePicture function');
+  }
+}
+
 const images = [
   {name: 'basketball.jpg', label: 'Playing basketball with the Tennis Intramural Team!'},
   {name: 'chess.jpg', label: 'Playing chess with my roommate!'},

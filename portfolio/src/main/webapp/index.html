@@ -9,7 +9,7 @@
   </head>
   <body>
     <ul class="header">
-      <img src="images/Profile_photo_Jess.jpg" alt="Profile photo of Jess" height="250">
+      <img src="images/Profile_photo_Jess.jpg" alt="Profile photo of Jess" height="250" id="profilePicture">
       <h1>Jess's Portfolio</h1>
       <li>
         <a href="index.html">About Me</a>
@@ -52,6 +52,35 @@
           In the future, I hope to become a <b>decent ukulelist</b>, 
           a <b>strong writer</b>, and eventually, a <b>full-time software developer</b>.
         </p>
+      </div>
+      <h2>Some Image Transformations!</h2>
+      <div class="speech-bubble card">
+        <ul class="buttons">
+          <li>
+            <button onclick="rotateProfilePicture()">Rotate</button>
+          </li>
+          <li>
+            <button onclick="invertProfilePicture()">Invert</button>
+          </li>
+          <li>
+            <button onclick="blurProfilePicture()">Blur</button>
+          </li>
+          <li>
+            <button onclick="brightenProfilePicture()">Brighten</button>
+          </li>
+          <li>
+            <button onclick="grayProfilePicture()">Gray</button>
+          </li>
+          <li>
+            <button onclick="hueRotateProfilePicture()">Hue-Rotate</button>
+          </li>
+          <li>
+            <button onclick="opacityProfilePicture()">More Transparent</button>
+          </li>
+          <li>
+            <button onclick="resetProfilePicture()">Reset</button>
+          </li>
+        </ul>
       </div>
     </div>
   </body>
