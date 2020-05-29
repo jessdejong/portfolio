@@ -84,20 +84,24 @@ function displayNewSlide(image) {
 
 /* Navigating the Slideshow with an index */
 function updateSlideShowIndex(direction) {
-  if (direction == DIRECTION_UP) {
-    slideShowIndex = (slideShowIndex + 1) % images.length;
-  }
-  else if (direction == DIRECTION_DOWN) {
-    slideShowIndex = slideShowIndex - 1;
-    if (slideShowIndex < 0) {
-      slideShowIndex += images.length;
-    }
-  }
-  else if (direction == RANDOM_SLIDE) {
-    slideShowIndex = Math.floor(Math.random() * images.length);
-  }
-  else {
-    throw new Error('Invalid Parameter to updateSlideShowIndex() function');
+  switch (direction) {
+    case DIRECTION_UP:
+      slideShowIndex = (slideShowIndex + 1) % images.length;
+      break;
+
+    case DIRECTION_DOWN:
+      slideShowIndex = slideShowIndex - 1;
+      if (slideShowIndex < 0) {
+        slideShowIndex += images.length;
+      }
+      break;
+
+    case RANDOM_SLIDE:
+      slideShowIndex = Math.floor(Math.random() * images.length);
+      break;
+
+    default:
+      throw new Error('Invalid Parameter to updateSlideShowIndex() function');
   }
 }
 
