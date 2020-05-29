@@ -9,7 +9,7 @@
   </head>
   <body>
     <ul class="header">
-      <img src="images/Profile_photo_Jess.jpg" alt="Profile photo of Jess" height="250">
+      <img src="images/Profile_photo_Jess.jpg" alt="Profile photo of Jess" height="250" id="profilePicture">
       <h1>Jess's Portfolio</h1>
       <li>
         <a href="#">About Me</a>
@@ -60,9 +60,16 @@
         <button onclick="addRandomGreeting()">Hello</button>
         <div id="greetingContainer"></div>
       </div>
-      <h2>Fun Image Transformations</h2>
+      <h2>Some Image Transformations!</h2>
       <div class="speech-bubble card">
-        <button onclick="rotateImage()" class="buttonStyle" id="rotateImageButton">Rotate Image</button>
+        <button onclick="rotateProfilePicture()" class="buttonStyle">Rotate</button>
+        <button onclick="invertProfilePicture()" class="buttonStyle">Invert</button>
+        <button onclick="blurProfilePicture()" class="buttonStyle">Blur</button>
+        <button onclick="brightenProfilePicture()" class="buttonStyle">Brighten</button>
+        <button onclick="grayProfilePicture()" class="buttonStyle">Gray</button>
+        <button onclick="hueRotateProfilePicture()" class="buttonStyle">Hue-Rotate</button>
+        <button onclick="opacityProfilePicture()" class="buttonStyle">More Transparent</button>
+        <button onclick="resetProfilePicture()" class="buttonStyle">Reset</button>
       </div>
     </div>
   </body>
