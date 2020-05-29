@@ -5,7 +5,7 @@
   width: 650px;
 }
 
-#greeting-container {
+#greetingContainer {
   margin-top: 20px;
 }
 
@@ -25,7 +25,13 @@ body {
   width: 500px;
 }
 
-/* TODO: alphabetize css properties */
+/* Styling layout cards */
+.card {
+  margin: 20px;
+  margin-left: 0px;
+  padding-right: 20px;
+  position: relative;
+}
 
 /* Adding arrow to speech bubble */
 .speech-bubble .arrow {
@@ -52,12 +58,12 @@ body {
 
 /* Styling the header */
 .header {
-  overflow: hidden;
   background-color: #fbfcfc;
   font-weight: bold;
-  padding: 20px 10px;
   margin-left: auto;
   margin-right:auto;
+  overflow: hidden;
+  padding: 20px 10px;
   width: 750px;
 }
 
@@ -66,31 +72,26 @@ body {
   list-style: none;
 }
 
-.popup li {
-  display: inline-block;
-  list-style: none;
-}
-
 /* Stylize image in header as a profile photo */
 .header img {
-  float: left;
-  border-radius: 70%;
   border: 2px solid black;
+  border-radius: 70%;
+  float: left;
   height: 150px;
   margin-right: 20px;
 }
 
 /* Interactive header links */
 .header a {
-  margin-left: 5px;
-  float: left;
   color: black;
-  text-align: center;
-  padding: 12px;
-  text-decoration: none;
+  border-radius: 4px;
+  float: left;
   font-size: 1.1em;
   line-height: 25px;
-  border-radius: 4px;
+  margin-left: 5px;
+  padding: 12px;
+  text-align: center;
+  text-decoration: none;
 }
 
 .header a:hover {
@@ -111,4 +112,47 @@ body {
 
 #popup.show {
   visibility: visible;
+}
+
+.popup li {
+  display: inline-block;
+  list-style: none;
+}
+
+/* Styling the slideshow */
+.slideShowNavigation {
+  background-color: white;
+  color: white;
+  width: 400px;
+}
+
+.slideshowNavigation button {
+  background-color: dodgerblue;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  display: inline-block;
+  font-size: 1em;
+  margin: 20px;  
+  margin-top: 0px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  text-align: center;
+  text-decoration: none;
+  width: 100px;
+}
+
+#slideshowContentContainer img {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 450px;
+}
+
+#slideDescription {
+  margin: 10px;
+  margin-bottom: 30px;
+  font-size: 1.2em;
+  color: black;
 }
