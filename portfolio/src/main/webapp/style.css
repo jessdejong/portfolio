@@ -5,7 +5,7 @@
   width: 650px;
 }
 
-#greeting-container {
+#greetingContainer {
   margin-top: 20px;
 }
 
@@ -112,4 +112,42 @@ body {
 .header a.active {
   background-color: blue;
   color: orange;
+}
+
+/* Styling the slideshow */
+.slideShowNavigation {
+  background-color: white;
+  color: white;
+  width: 400px;
+}
+
+.slideshowNavigation button {
+  background-color: dodgerblue;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  display: inline-block;
+  font-size: 1em;
+  margin: 20px;  
+  margin-top: 0px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  text-align: center;
+  text-decoration: none;
+  width: 100px;
+}
+
+#slideshowContentContainer img {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 450px;
+}
+
+#slideDescription {
+  margin: 10px;
+  margin-bottom: 30px;
+  font-size: 1.2em;
+  color: black;
 }
