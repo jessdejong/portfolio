@@ -126,7 +126,7 @@ body {
   width: 400px;
 }
 
-.buttonStyle {
+button {
   background-color: dodgerblue;
   border: none;
   border-radius: 5px;
