@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Jess DeJong - STEP Intern</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <ul class="header">
+      <img src="images/Profile_photo_Jess.jpg" alt="Profile photo of Jess" height="250">
+      <h1>Jess's Portfolio</h1>
+      <li>
+        <a href="#">About Me</a>
+      </li>
+      <li>
+        <a href="#">Projects & Experience</a>
+      </li>
+      <li>
+        <a href="#">Hobbies</a>
+      </li>
+      <li>
+        <a href="#" onclick="togglePopup()">Socials & Contact</a>
+        <span id="popup">
+          <a href="mailto:jessdejong843@gmail.com" target="_blank">Email</a>
+          <a href="https://linkedin.com/in/jess-dejong" target="_blank">LinkedIn</a>
+          <a href="https://instagram.com/jess.dejong" target="_blank">Instagram</a>
+          <a href="https://github.com/jessdejong" target="_blank">GitHub</a>
+        </span>
+      </li>
+    </ul>
+
+    <div id="content">
+      <h1>Projects</h1>
+      <h2>Spherical Inverter</h2>
+      <div class="speech-bubble card">
+        <img src="images/Spherical_Inverter_Screenshot.png" alt="Spherical Inverter Screenshot" width="400" border="1px solid black">
+        <p>
+          A MATLAB-based GUI application that visualizes three-dimensional spherical inversion. 
+          Performs inversion on spheres, cylinders, ellipsoids, custom point sets, and MATLAB 
+          functions passed by the user. 
+          <a href="files/Spherical_Inverter_Research_Report.pdf" target="_blank">Resgarch Report</a>.
+        </p>
+      </div>
+      <h2>Firewatch</h2>
+      <div class="speech-bubble card">
+        <img src="images/Firewatch-screenshot.png" alt="Spherical Inverter Screenshot" width="400" border="1px solid black">
+        <p>
+          Firewatch picks up real-time tweets about wildfires to track 
+          the movement of the California wildfires. Using a 
+          <a href="https://github.com/SyedAbuTalib/FireWatch/blob/master/randomwalk.ipynb" target="_blank">random walk model</a>
+          , the application attempt to predict the spread of the fire, 
+          and elucidate areas which are most at risk. 3rd Place HackTX.
+        </p>
+      </div>
+
+      To see some of my other projects, check out my <a href="https://github.com/jessdejong" target="_blank">GitHub Profile</a>.
+
+      <h1>Experience</h1>
+      <h2>State Farm, Summer '18</h2>
+      <div class="speech-bubble card">
+        <ul>
+          <li>
+            Created reverse engineering and cryptography challenges for the 
+            State Farm Capture the Flag (cyber-security competition) using C and Python.
+          </li>
+        </ul>
+      </div>
+      <h2>State Farm, Summer '19</h2>
+      <div class="speech-bubble card">
+        <ul>
+          <li>
+            Added a drivers-license scanning feature to an Automobile-Quote Application 
+            to quickly populate customer information in a form.
+          </li>
+          <li>
+            Added a RESTful (angular) front-end on top of a Spring framework 
+            to eliminate unnecessary javascript in the front-end.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
