@@ -143,6 +143,11 @@ button {
   text-decoration: none;
 }
 
+.buttons li {
+  display: inline-block;
+  list-style: none;
+}
+
 #slideshowContentContainer img {
   border: 1px solid black;
   border-radius: 5px;
