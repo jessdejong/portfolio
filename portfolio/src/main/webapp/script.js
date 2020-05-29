@@ -96,6 +96,9 @@ function updateSlideShowIndex(direction) {
   else if (direction == RANDOM_SLIDE) {
     slideShowIndex = Math.floor(Math.random() * images.length);
   }
+  else {
+    throw new Error('Invalid Parameter to updateSlideShowIndex() function');
+  }
 }
 
 function togglePopup() {
