@@ -14,16 +14,6 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-/* Popup styling */
-#popup {
-  font-size: .8em;
-  visibility: hidden;
-}
-
-#popup.show {
-  visibility: visible;
-}
-
 /* Stylizing div as a speech bubble */
 .speech-bubble {
   background-color: #f8f8f8;
@@ -111,4 +101,14 @@ body {
 .header a.active {
   background-color: blue;
   color: orange;
+}
+
+/* Popup styling */
+#popup {
+  font-size: .8em;
+  visibility: hidden;
+}
+
+#popup.show {
+  visibility: visible;
 }
