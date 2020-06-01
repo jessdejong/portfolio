@@ -181,3 +181,10 @@ function togglePopup() {
   popup.classList.toggle("show");
   console.log(popup);
 }
+
+/* Fetch greeting from the Server and add to DOM */
+function getGreeting() {
+  fetch('/data').then(response => response.text()).then(greeting => {
+    document.getElementById("greetingContainer").innerText = greeting;
+  });
+}
