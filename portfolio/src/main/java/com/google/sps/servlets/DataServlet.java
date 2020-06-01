@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private static final String MY_NAME = "Jess DeJong";
   private ArrayList<String> listOfComments = List.of("THIS IS THE BEST WEBSITE I HAVE EVER SEEN.",
       "Wow, the UI and the functionality of the website fit together seamlessly. 10/10.",
       "B.W.E.D (Best Website Ever Duh)");
