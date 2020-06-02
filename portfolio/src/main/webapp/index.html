@@ -82,11 +82,23 @@
           </li>
         </ul>
       </div>
-      <h2>Let's fetch data!</h2>
+      <h4>Join the Discussion!</h4>
       <div class="speech-bubble card">
-        <button onclick="showComments()">Show Comments!</button>
-        <div id="commentsContainer"></div>
+        <form action="/data" method="POST">
+          <textarea name="text-input" placeholder="Leave a message..." id="commentsTextArea"></textarea>
+          <input type="submit" id="commentsSubmitButton"/>
+        </form>
+      </div>
+      <h4>Previous comments (0)</h4>
+      <div class="speech-bubble card">
+        <ul id="commentsHistory"></ul>
       </div>
     </div>
   </body>
 </html>
+
+
+
+
+
+
