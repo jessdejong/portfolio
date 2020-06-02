@@ -26,10 +26,12 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+  private Gson gson;
   private List<String> listOfComments;
 
   @Override
   public void init() {
+    gson = new Gson();
     listOfComments = new ArrayList<String>();
     listOfComments.add("THIS IS THE BEST WEBSITE I HAVE EVER SEEN.");
     listOfComments.add("Wow, the UI and the functionality of this website piece together seamlessly. 10/10.");
@@ -46,8 +48,6 @@ public class DataServlet extends HttpServlet {
 
   /* Use Gson Library to convert list of comments to Json */
   private String convertToJsonUsingGson(List<String> list) {
-    Gson gson = new Gson();
-    String json = gson.toJson(list);
-    return json;
+    return gson.toJson(list);
   }
 }
