@@ -27,15 +27,17 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   private Gson gson;
-  private List<String> listOfComments;
+  private List<String> listOfComments = new ArrayList<String>();
 
   @Override
   public void init() {
     gson = new Gson();
+    /*
     listOfComments = new ArrayList<String>();
     listOfComments.add("THIS IS THE BEST WEBSITE I HAVE EVER SEEN.");
     listOfComments.add("Wow, the UI and the functionality of this website piece together seamlessly. 10/10.");
     listOfComments.add("B.W.E.D. (Best Website Ever Duh)");
+    */
   }
 
   @Override
@@ -44,6 +46,25 @@ public class DataServlet extends HttpServlet {
     String json = convertToJsonUsingGson(listOfComments);
     response.setContentType("application/json");
     response.getWriter().println(json);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String comment = getParameter(request, "text-input", "");
+    listOfComments.add(comment);
+
+    // Respond with result of request
+    response.setContentType("type/html;");
+    response.getWriter().println(comment);
+    
+    // Redirect back to the home page
+    response.sendRedirect("/index.html");
+  }
+
+  /* Returns the request parameter, or the default value if not specified */
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    return value == null ? defaultValue : value;
   }
 
   /* Use Gson Library to convert list of comments to Json */
