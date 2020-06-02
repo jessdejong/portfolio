@@ -26,19 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private Gson gson;
+  private Gson gson = new Gson();
   private List<String> listOfComments = new ArrayList<String>();
-
-  @Override
-  public void init() {
-    gson = new Gson();
-    /*
-    listOfComments = new ArrayList<String>();
-    listOfComments.add("THIS IS THE BEST WEBSITE I HAVE EVER SEEN.");
-    listOfComments.add("Wow, the UI and the functionality of this website piece together seamlessly. 10/10.");
-    listOfComments.add("B.W.E.D. (Best Website Ever Duh)");
-    */
-  }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -56,8 +45,6 @@ public class DataServlet extends HttpServlet {
     // Respond with result of request
     response.setContentType("type/html;");
     response.getWriter().println(comment);
-    
-    // Redirect back to the home page
     response.sendRedirect("/index.html");
   }
 
