@@ -182,9 +182,20 @@ function togglePopup() {
   console.log(popup);
 }
 
-/* Fetch greeting from the Server and add to DOM */
-function getGreeting() {
-  fetch('/data').then(response => response.text()).then(greeting => {
-    document.getElementById("greetingContainer").innerText = greeting;
+/* Fetch comments from the Server and add to DOM */
+function showComments() {
+  fetch('/data').then(response => response.json()).then(comments => {
+    const commentsList = document.getElementById("commentsContainer");
+    commentsList.innerHTML = '';
+    for (let i = 0; i < comments.length; i++) {
+      commentsList.appendChild(createListItemElement(comments[i]));
+    }
   });
+}
+
+/* Create a list item element that contains a comment text */
+function createListItemElement(comment) {
+  const listItemElement = document.createElement('li');
+  listItemElement.innerText = comment;
+  return listItemElement;
 }

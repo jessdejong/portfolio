@@ -14,7 +14,10 @@
 
 package com.google.sps.servlets;
 
+import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +26,28 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private static final String MY_NAME = "Jess DeJong";
+  private Gson gson;
+  private List<String> listOfComments;
+
+  @Override
+  public void init() {
+    gson = new Gson();
+    listOfComments = new ArrayList<String>();
+    listOfComments.add("THIS IS THE BEST WEBSITE I HAVE EVER SEEN.");
+    listOfComments.add("Wow, the UI and the functionality of this website piece together seamlessly. 10/10.");
+    listOfComments.add("B.W.E.D. (Best Website Ever Duh)");
+  }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("Hi! It's me, " + MY_NAME + "!");
+    // Send json as the response
+    String json = convertToJsonUsingGson(listOfComments);
+    response.setContentType("application/json");
+    response.getWriter().println(json);
+  }
+
+  /* Use Gson Library to convert list of comments to Json */
+  private String convertToJsonUsingGson(List<String> list) {
+    return gson.toJson(list);
   }
 }
