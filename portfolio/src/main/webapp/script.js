@@ -196,6 +196,6 @@ function showComments() {
 /* Create a list item element that contains a comment text */
 function createListItemElement(comment) {
   const listItemElement = document.createElement('li');
-  listItemElement.innerHTML = comment;
+  listItemElement.innerText = comment;
   return listItemElement;
 }
