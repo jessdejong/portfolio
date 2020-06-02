@@ -133,7 +133,7 @@ body {
   width: 400px;
 }
 
-button, #commentsSubmitButton {
+button, input[type="button"], input[type="submit"] { 
   background-color: dodgerblue;
   border: none;
   border-radius: 5px;
