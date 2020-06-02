@@ -188,14 +188,14 @@ function showComments() {
     const commentsList = document.getElementById("commentsContainer");
     commentsList.innerHTML = '';
     for (let i = 0; i < comments.length; i++) {
-      commentsList.appendChild(createListElement(comments[i]));
+      commentsList.appendChild(createListItemElement(comments[i]));
     }
   });
 }
 
-/* Create a list element that contains a comment text */
-function createListElement(comment) {
-  const listElement = document.createElement('li');
-  listElement.innerHTML = comment;
-  return listElement;
+/* Create a list item element that contains a comment text */
+function createListItemElement(comment) {
+  const listItemElement = document.createElement('li');
+  listItemElement.innerHTML = comment;
+  return listItemElement;
 }
