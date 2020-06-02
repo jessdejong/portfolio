@@ -42,9 +42,6 @@ public class DataServlet extends HttpServlet {
     String comment = getParameter(request, "text-input", "");
     listOfComments.add(comment);
 
-    // Respond with result of request
-    response.setContentType("type/html;");
-    response.getWriter().println(comment);
     response.sendRedirect("/index.html");
   }
 
