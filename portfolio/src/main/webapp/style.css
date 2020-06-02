@@ -11,7 +11,7 @@ body {
 }
 
 /* Stylizing div as a speech bubble */
-.speech-bubble {
+.speechBubble {
   background-color: #f8f8f8;
   border: 2px solid #c8c8c8;
   border-radius: 10px;
@@ -31,7 +31,7 @@ body {
 }
 
 /* Adding arrow to speech bubble */
-.speech-bubble .arrow {
+.speechBubble .arrow {
   border-style: solid;
   position: absolute;
 }
