@@ -17,6 +17,9 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,26 +34,31 @@ import javax.servlet.http.HttpServletResponse;
 public class DataServlet extends HttpServlet {
   private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
   private Gson gson = new Gson();
-  private List<String> listOfComments = new ArrayList<String>();
+  private Query query = new Query("Comment");
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get comments from datastore
+    PreparedQuery results = datastore.prepare(query);
+    List<String> comments = new ArrayList<>();
+    for (Entity entity : results.asIterable()) {
+      comments.add((String)entity.getProperty("content"));
+    }
+
     // Send json as the response
-    String json = convertToJsonUsingGson(listOfComments);
+    String json = convertToJsonUsingGson(comments);
     response.setContentType("application/json");
     response.getWriter().println(json);
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String comment = getParameter(request, "text-input", "");
-    listOfComments.add(comment);
-
+    String comment = request.getParameter("text-input");
     // Add comment entity to Datastore
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("content", comment);
     datastore.put(commentEntity);
-
+    // Redirect to about me page on post
     response.sendRedirect("/index.html");
   }
 
