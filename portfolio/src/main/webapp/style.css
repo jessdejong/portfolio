@@ -11,11 +11,12 @@ body {
 }
 
 /* Stylizing div as a speech bubble */
-.speech-bubble {
+.speechBubble {
   background-color: #f8f8f8;
   border: 2px solid #c8c8c8;
   border-radius: 10px;
   padding: 20px;
+  padding-bottom: 5px;
   position: absolute;
   text-align:center;
   width: 500px;
@@ -30,7 +31,7 @@ body {
 }
 
 /* Adding arrow to speech bubble */
-.speech-bubble .arrow {
+.speechBubble .arrow {
   border-style: solid;
   position: absolute;
 }
@@ -115,6 +116,16 @@ body {
   list-style: none;
 }
 
+/* Styling the Comments Section */
+#commentsTextArea {
+  border-radius: 5px;
+  display: inline-block;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1em;
+  padding: 5px;
+  width: 90%;
+}
+
 /* Styling the slideshow */
 .slideShowNavigation {
   background-color: white;
@@ -122,7 +133,7 @@ body {
   width: 400px;
 }
 
-button {
+button, input[type="button"], input[type="submit"] { 
   background-color: dodgerblue;
   border: none;
   border-radius: 5px;

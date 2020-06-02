@@ -183,13 +183,17 @@ function togglePopup() {
 }
 
 /* Fetch comments from the Server and add to DOM */
-function showComments() {
+function loadComments() {
   fetch('/data').then(response => response.json()).then(comments => {
+    // Populate comments history with comments
     const commentsList = document.getElementById("commentsContainer");
     commentsList.innerHTML = '';
     for (let i = 0; i < comments.length; i++) {
       commentsList.appendChild(createListItemElement(comments[i]));
     }
+    // Update total number of comments
+    const commentsCountElement = document.getElementById("commentsCount");
+    commentsCount.innerText = "Previous comments (" + comments.length + ")";
   });
 }
 
