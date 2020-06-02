@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="loadComments()">
     <ul class="header">
       <img src="images/Profile_photo_Jess.jpg" alt="Profile photo of Jess" height="250" id="profilePicture">
       <h1>Jess's Portfolio</h1>
@@ -89,9 +89,9 @@
           <input type="submit" id="commentsSubmitButton"/>
         </form>
       </div>
-      <h4>Previous comments (0)</h4>
+      <h4 id="commentsCount">Previous comments (0)</h4>
       <div class="speech-bubble card">
-        <ul id="commentsHistory"></ul>
+        <ul id="commentsContainer"></ul>
       </div>
     </div>
   </body>
