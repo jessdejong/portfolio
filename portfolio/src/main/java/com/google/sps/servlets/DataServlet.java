@@ -48,13 +48,13 @@ public class DataServlet extends HttpServlet {
     response.sendRedirect("/index.html");
   }
 
-  /* Returns the request parameter, or the default value if not specified */
+  /** Returns the request parameter, or the default value if not specified */
   private String getParameter(HttpServletRequest request, String name, String defaultValue) {
     String value = request.getParameter(name);
     return value == null ? defaultValue : value;
   }
 
-  /* Use Gson Library to convert list of comments to Json */
+  /** Use Gson Library to convert list of comments to Json */
   private String convertToJsonUsingGson(List<String> list) {
     return gson.toJson(list);
   }
