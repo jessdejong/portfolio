@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DataServlet extends HttpServlet {
   private static final String COMMENT_ENTITY = "Comment";
   private static final String COMMENT_CONTENT_PROPERTY = "content";
+  private static final String NUM_COMMENTS_PARAMETER = "num-comments";
 
   private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
   private Gson gson = new Gson();
@@ -40,10 +41,22 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Get comments from datastore
+    // get number of comments to display
+    int numComments = getNumCommentsParameter(request);
+    if (numComments == -1) {
+      response.setContentType("text/html");
+      response.getWriter().println("Please enter a non-negative integer.");
+      return;
+    }
+
+    // Get comments from datastore, and add numComments number of comments to comments list
     PreparedQuery results = datastore.prepare(commentsQuery);
     List<String> comments = new ArrayList<>();
+    int numCommentsAdded = 0;
     for (Entity entity : results.asIterable()) {
+      if (numCommentsAdded++ >= numComments) {
+        break;
+      }
       comments.add((String) entity.getProperty(COMMENT_CONTENT_PROPERTY));
     }
 
@@ -55,7 +68,7 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String comment = getParameter(request, "text-input", "");
+    String comment = getStringParameter(request, "text-input", "");
     // Add comment entity to Datastore
     Entity commentEntity = new Entity(COMMENT_ENTITY);
     commentEntity.setProperty(COMMENT_CONTENT_PROPERTY, comment);
@@ -64,10 +77,30 @@ public class DataServlet extends HttpServlet {
     response.sendRedirect("/index.html");
   }
 
-  /** Returns the request parameter, or the default value if not specified */
-  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+  /** Returns the request parameter (for Strings), or the default value if not specified */
+  private String getStringParameter(HttpServletRequest request, String name, String defaultValue) {
     String value = request.getParameter(name);
     return value == null ? defaultValue : value;
+  }
+
+  /** Get number of comments to display from request */ 
+  private int getNumCommentsParameter(HttpServletRequest request) {
+    String numCommentsString = request.getParameter(NUM_COMMENTS_PARAMETER);
+
+    // Convert string value to int
+    int numComments;
+    try {
+      numComments = Integer.parseInt(numCommentsString);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + numCommentsString);
+      return -1;
+    }
+
+    if (numComments < 0) {
+      System.err.println("Value is out of range: " + numCommentsString);
+      return -1;
+    }
+    return numComments;
   }
 
   /** Use Gson Library to convert list of comments to Json */
