@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     <script src="script.js"></script>
   </head>
-  <body onload="loadComments()">
+  <body onload="updateNumCommentsDisplayed()">
     <ul class="header">
       <img src="images/Profile_photo_Jess.jpg" alt="Profile photo of Jess" height="250" id="profilePicture">
       <h1>Jess's Portfolio</h1>
@@ -89,7 +89,19 @@
           <input type="submit"/>
         </form>
       </div>
-      <h4 id="commentsCount">Loading...</h4>
+      <div id="commentsHeaderDisplay">
+        <span>
+          <h4>Displaying up to</h4>
+        </span>
+        <span>
+          <input type="number" id="numCommentsInput" name="numCommentsInput" min="0" max="1000" value="5"
+              onchange="updateNumCommentsDisplayed()">
+        </span>
+        <span>
+          <h4>comments:</h4>
+        </span>
+      </div>
+
       <div class="speechBubble card">
         <ul id="commentsContainer"></ul>
       </div>
