@@ -33,12 +33,12 @@ import javax.servlet.http.HttpServletResponse;
 public class DataServlet extends HttpServlet {
   private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
   private Gson gson = new Gson();
-  private Query query = new Query("Comment");
+  private Query commentsQuery = new Query("Comment");
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get comments from datastore
-    PreparedQuery results = datastore.prepare(query);
+    PreparedQuery results = datastore.prepare(commentsQuery);
     List<String> comments = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
       comments.add((String) entity.getProperty("content"));
