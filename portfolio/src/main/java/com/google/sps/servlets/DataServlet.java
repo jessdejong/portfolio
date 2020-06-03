@@ -19,6 +19,7 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,11 +34,12 @@ import javax.servlet.http.HttpServletResponse;
 public class DataServlet extends HttpServlet {
   private static final String COMMENT_ENTITY = "Comment";
   private static final String COMMENT_CONTENT_PROPERTY = "content";
+  private static final String COMMENT_TIMESTAMP_PROPERTY = "timestamp";
   private static final String NUM_COMMENTS_PARAMETER = "num-comments";
 
   private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
   private Gson gson = new Gson();
-  private Query commentsQuery = new Query(COMMENT_ENTITY);
+  private Query commentsQuery = new Query(COMMENT_ENTITY).addSort("timestamp", SortDirection.DESCENDING);
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -69,9 +71,11 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String comment = getStringParameter(request, "text-input", "");
+    long timestamp = System.currentTimeMillis();
     // Add comment entity to Datastore
     Entity commentEntity = new Entity(COMMENT_ENTITY);
     commentEntity.setProperty(COMMENT_CONTENT_PROPERTY, comment);
+    commentEntity.setProperty(COMMENT_TIMESTAMP_PROPERTY, timestamp);
     datastore.put(commentEntity);
     // Redirect to about me page on post
     response.sendRedirect("/index.html");
