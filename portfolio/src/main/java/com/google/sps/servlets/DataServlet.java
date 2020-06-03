@@ -53,7 +53,7 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String comment = request.getParameter("text-input");
+    String comment = getParameter(request, "text-input", "");
     // Add comment entity to Datastore
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("content", comment);
