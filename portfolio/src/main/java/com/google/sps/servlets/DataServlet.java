@@ -42,7 +42,7 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
     List<String> comments = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
-      comments.add((String)entity.getProperty("content"));
+      comments.add((String) entity.getProperty("content"));
     }
 
     // Send json as the response
