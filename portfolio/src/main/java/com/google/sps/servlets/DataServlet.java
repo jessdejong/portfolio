@@ -31,9 +31,12 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+  private static final String COMMENT_ENTITY = "Comment";
+  private static final String COMMENT_CONTENT_PROPERTY = "content";
+
   private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
   private Gson gson = new Gson();
-  private Query commentsQuery = new Query("Comment");
+  private Query commentsQuery = new Query(COMMENT_ENTITY);
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -41,7 +44,7 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(commentsQuery);
     List<String> comments = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
-      comments.add((String) entity.getProperty("content"));
+      comments.add((String) entity.getProperty(COMMENT_CONTENT_PROPERTY));
     }
 
     // Send json as the response
@@ -54,8 +57,8 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String comment = getParameter(request, "text-input", "");
     // Add comment entity to Datastore
-    Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("content", comment);
+    Entity commentEntity = new Entity(COMMENT_ENTITY);
+    commentEntity.setProperty(COMMENT_CONTENT_PROPERTY, comment);
     datastore.put(commentEntity);
     // Redirect to about me page on post
     response.sendRedirect("/index.html");
