@@ -138,14 +138,14 @@ function randomSlide() {
 
 /* Display slideshow, with correctly navigated content */
 function displayNewSlide(image) {
-  // display slide/image on slideshow
+  // Display slide/image on slideshow
   const imgElement = document.createElement('img');
   imgElement.src = 'images/' + image.name;
   const imageContainer = document.getElementById('slideshowContentContainer');
   imageContainer.innerHTML = '';
   imageContainer.appendChild(imgElement);
 
-  // display corresponding description text
+  // Display corresponding description text
   const paragraph = document.createElement('p');
   paragraph.appendChild(document.createTextNode(image.label));
   const descriptionContainer = document.getElementById('slideDescription');
@@ -186,9 +186,9 @@ let numCommentsToDisplay = -1;
 
 /* Fetch comments from the Server and add to DOM */
 function updateNumCommentsDisplayed() {
-  // get number of comments to display
+  // Get number of comments to display
   numCommentsToDisplay = document.getElementById("numCommentsInput").value;
-  // fetch and display comments
+  // Fetch and display comments
   fetch('/data?num-comments=' + numCommentsToDisplay).then(response => response.json()).then(comments => {
     // Populate comments history with comments
     const commentsList = document.getElementById("commentsContainer");
@@ -204,4 +204,12 @@ function createListItemElement(comment) {
   const listItemElement = document.createElement('li');
   listItemElement.innerText = comment;
   return listItemElement;
+}
+
+/* Delete all comments, and update comments on page */
+function deleteComments() {
+  fetch('/delete-data', { method: 'POST' }).then(response => {
+    const commentsList = document.getElementById("commentsContainer");
+    commentsList.innerHTML = '';
+  });
 }
