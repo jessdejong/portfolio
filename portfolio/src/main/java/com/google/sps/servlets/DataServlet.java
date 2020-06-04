@@ -46,7 +46,7 @@ public class DataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get number of comments to display
     int numCommentsRequested = getNumCommentsParameter(request);
-    if (numCommentsRequested == -1) {
+    if (numCommentsRequested < 0) {
       response.setContentType("text/html");
       response.getWriter().println("Please enter a non-negative integer.");
       return;
@@ -97,13 +97,9 @@ public class DataServlet extends HttpServlet {
       numComments = Integer.parseInt(numCommentsString);
     } catch (NumberFormatException e) {
       System.err.println("Could not convert to int: " + numCommentsString);
-      return -1;
+      return Integer.MIN_VALUE;
     }
 
-    if (numComments < 0) {
-      System.err.println("Value is out of range: " + numCommentsString);
-      return -1;
-    }
     return numComments;
   }
 
