@@ -126,6 +126,14 @@ body {
   width: 90%;
 }
 
+#commentsHeaderDisplay {
+  width: 100%;
+}
+
+#commentsHeaderDisplay span {
+  display: inline-block;
+}
+
 /* Styling the slideshow */
 .slideShowNavigation {
   background-color: white;

@@ -19,6 +19,7 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,18 +34,37 @@ import javax.servlet.http.HttpServletResponse;
 public class DataServlet extends HttpServlet {
   private static final String COMMENT_ENTITY = "Comment";
   private static final String COMMENT_CONTENT_PROPERTY = "content";
+  private static final String COMMENT_TIMESTAMP_PROPERTY = "timestamp";
+  private static final String DEFAULT_STRING = "";
+  private static final String NUM_COMMENTS_PARAMETER = "num-comments";
+  private static final String TEXT_INPUT_PARAMETER = "text-input";
 
   private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
   private Gson gson = new Gson();
-  private Query commentsQuery = new Query(COMMENT_ENTITY);
+  private Query commentsQuery = new Query(COMMENT_ENTITY).addSort("timestamp", SortDirection.DESCENDING);
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Get comments from datastore
+    // Get number of comments to display
+    int numCommentsRequested = getIntegerParameter(request, NUM_COMMENTS_PARAMETER, Integer.MIN_VALUE);
+    if (numCommentsRequested < 0) {
+      response.setContentType("text/html");
+      response.getWriter().println("Please enter a non-negative integer.");
+      return;
+    }
+
+    // Get comments from datastore, and add numCommentsRequested number of comments to comments list
     PreparedQuery results = datastore.prepare(commentsQuery);
     List<String> comments = new ArrayList<>();
-    for (Entity entity : results.asIterable()) {
-      comments.add((String) entity.getProperty(COMMENT_CONTENT_PROPERTY));
+    int numCommentsAdded = 0;
+    if (numCommentsRequested != 0) {
+      for (Entity entity : results.asIterable()) {
+        comments.add((String) entity.getProperty(COMMENT_CONTENT_PROPERTY));
+        numCommentsAdded++;
+        if (numCommentsAdded >= numCommentsRequested) {
+          break;
+        }
+      }
     }
 
     // Send json as the response
@@ -55,19 +75,33 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String comment = getParameter(request, "text-input", "");
+    String comment = getStringParameter(request, TEXT_INPUT_PARAMETER, DEFAULT_STRING);
     // Add comment entity to Datastore
     Entity commentEntity = new Entity(COMMENT_ENTITY);
     commentEntity.setProperty(COMMENT_CONTENT_PROPERTY, comment);
+    commentEntity.setProperty(COMMENT_TIMESTAMP_PROPERTY, System.currentTimeMillis());
     datastore.put(commentEntity);
     // Redirect to about me page on post
     response.sendRedirect("/index.html");
   }
 
-  /** Returns the request parameter, or the default value if not specified */
-  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+  /** Returns the request parameter (for Strings), or the default value if not specified */
+  private String getStringParameter(HttpServletRequest request, String name, String defaultValue) {
     String value = request.getParameter(name);
     return value == null ? defaultValue : value;
+  }
+
+  /** Returns the request parameter (for Integers), or the default value if not specified */
+  private int getIntegerParameter(HttpServletRequest request, String name, int defaultValue) {
+    String value = getStringParameter(request, NUM_COMMENTS_PARAMETER, DEFAULT_STRING);
+
+    // Convert string value to integer
+    try {
+      return value.isEmpty() ? defaultValue : Integer.parseInt(value);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + value);
+      return Integer.MIN_VALUE;
+    }
   }
 
   /** Use Gson Library to convert list of comments to Json */

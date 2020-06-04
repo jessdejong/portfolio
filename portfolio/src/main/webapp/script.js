@@ -182,18 +182,20 @@ function togglePopup() {
   console.log(popup);
 }
 
+let numCommentsToDisplay = -1;
+
 /* Fetch comments from the Server and add to DOM */
-function loadComments() {
-  fetch('/data').then(response => response.json()).then(comments => {
+function updateNumCommentsDisplayed() {
+  // get number of comments to display
+  numCommentsToDisplay = document.getElementById("numCommentsInput").value;
+  // fetch and display comments
+  fetch('/data?num-comments=' + numCommentsToDisplay).then(response => response.json()).then(comments => {
     // Populate comments history with comments
     const commentsList = document.getElementById("commentsContainer");
     commentsList.innerHTML = '';
     for (let i = 0; i < comments.length; i++) {
       commentsList.appendChild(createListItemElement(comments[i]));
     }
-    // Update total number of comments
-    const commentsCountElement = document.getElementById("commentsCount");
-    commentsCount.innerText = "Previous comments (" + comments.length + ")";
   });
 }
 
