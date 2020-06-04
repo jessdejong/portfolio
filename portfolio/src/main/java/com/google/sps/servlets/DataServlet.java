@@ -72,11 +72,10 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String comment = getStringParameter(request, TEXT_INPUT_PARAMETER, "");
-    long timestamp = System.currentTimeMillis();
     // Add comment entity to Datastore
     Entity commentEntity = new Entity(COMMENT_ENTITY);
     commentEntity.setProperty(COMMENT_CONTENT_PROPERTY, comment);
-    commentEntity.setProperty(COMMENT_TIMESTAMP_PROPERTY, timestamp);
+    commentEntity.setProperty(COMMENT_TIMESTAMP_PROPERTY, System.currentTimeMillis());
     datastore.put(commentEntity);
     // Redirect to about me page on post
     response.sendRedirect("/index.html");
@@ -90,7 +89,7 @@ public class DataServlet extends HttpServlet {
 
   /** Get number of comments to display from request */ 
   private int getNumCommentsParameter(HttpServletRequest request) {
-    String numCommentsString = request.getParameter(NUM_COMMENTS_PARAMETER);
+    String numCommentsString = request.getStringParameter(request, NUM_COMMENTS_PARAMETER, "");
 
     // Convert string value to int
     int numComments;
