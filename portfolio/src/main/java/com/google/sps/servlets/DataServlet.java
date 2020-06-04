@@ -43,7 +43,7 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // get number of comments to display
+    // Get number of comments to display
     int numComments = getNumCommentsParameter(request);
     if (numComments == -1) {
       response.setContentType("text/html");
