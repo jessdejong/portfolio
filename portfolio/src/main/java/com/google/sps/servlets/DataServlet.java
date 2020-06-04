@@ -35,6 +35,7 @@ public class DataServlet extends HttpServlet {
   private static final String COMMENT_ENTITY = "Comment";
   private static final String COMMENT_CONTENT_PROPERTY = "content";
   private static final String COMMENT_TIMESTAMP_PROPERTY = "timestamp";
+  private static final String DEFAULT_STRING = "";
   private static final String NUM_COMMENTS_PARAMETER = "num-comments";
   private static final String TEXT_INPUT_PARAMETER = "text-input";
 
@@ -45,7 +46,7 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get number of comments to display
-    int numCommentsRequested = getNumCommentsParameter(request);
+    int numCommentsRequested = getIntegerParameter(request, NUM_COMMENTS_PARAMETER, Integer.MIN_VALUE);
     if (numCommentsRequested < 0) {
       response.setContentType("text/html");
       response.getWriter().println("Please enter a non-negative integer.");
@@ -74,7 +75,7 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String comment = getStringParameter(request, TEXT_INPUT_PARAMETER, "");
+    String comment = getStringParameter(request, TEXT_INPUT_PARAMETER, DEFAULT_STRING);
     // Add comment entity to Datastore
     Entity commentEntity = new Entity(COMMENT_ENTITY);
     commentEntity.setProperty(COMMENT_CONTENT_PROPERTY, comment);
@@ -90,20 +91,17 @@ public class DataServlet extends HttpServlet {
     return value == null ? defaultValue : value;
   }
 
-  /** Get number of comments to display from request */ 
-  private int getNumCommentsParameter(HttpServletRequest request) {
-    String numCommentsString = getStringParameter(request, NUM_COMMENTS_PARAMETER, "");
+  /** Returns the request parameter (for Integers), or the default value if not specified */
+  private int getIntegerParameter(HttpServletRequest request, String name, int defaultValue) {
+    String value = getStringParameter(request, NUM_COMMENTS_PARAMETER, DEFAULT_STRING);
 
-    // Convert string value to int
-    int numComments;
+    // Convert string value to integer
     try {
-      numComments = Integer.parseInt(numCommentsString);
+      return value.isEmpty() ? defaultValue : Integer.parseInt(value);
     } catch (NumberFormatException e) {
-      System.err.println("Could not convert to int: " + numCommentsString);
+      System.err.println("Could not convert to int: " + value);
       return Integer.MIN_VALUE;
     }
-
-    return numComments;
   }
 
   /** Use Gson Library to convert list of comments to Json */
