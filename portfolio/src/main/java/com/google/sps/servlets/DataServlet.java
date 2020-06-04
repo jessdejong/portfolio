@@ -52,15 +52,18 @@ public class DataServlet extends HttpServlet {
       return;
     }
 
-    // Get comments from datastore, and add numComments number of comments to comments list
+    // Get comments from datastore, and add numCommentsRequested number of comments to comments list
     PreparedQuery results = datastore.prepare(commentsQuery);
     List<String> comments = new ArrayList<>();
     int numCommentsAdded = 0;
-    for (Entity entity : results.asIterable()) {
-      if (numCommentsAdded++ >= numCommentsRequested) {
-        break;
+    if (numCommentsRequested != 0) {
+      for (Entity entity : results.asIterable()) {
+        comments.add((String) entity.getProperty(COMMENT_CONTENT_PROPERTY));
+        numCommentsAdded++;
+        if (numCommentsAdded >= numCommentsRequested) {
+          break;
+        }
       }
-      comments.add((String) entity.getProperty(COMMENT_CONTENT_PROPERTY));
     }
 
     // Send json as the response
