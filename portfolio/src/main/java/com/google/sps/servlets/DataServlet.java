@@ -89,7 +89,7 @@ public class DataServlet extends HttpServlet {
 
   /** Get number of comments to display from request */ 
   private int getNumCommentsParameter(HttpServletRequest request) {
-    String numCommentsString = request.getStringParameter(request, NUM_COMMENTS_PARAMETER, "");
+    String numCommentsString = getStringParameter(request, NUM_COMMENTS_PARAMETER, "");
 
     // Convert string value to int
     int numComments;
