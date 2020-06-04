@@ -36,6 +36,7 @@ public class DataServlet extends HttpServlet {
   private static final String COMMENT_CONTENT_PROPERTY = "content";
   private static final String COMMENT_TIMESTAMP_PROPERTY = "timestamp";
   private static final String NUM_COMMENTS_PARAMETER = "num-comments";
+  private static final String TEXT_INPUT_PARAMETER = "text-input";
 
   private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
   private Gson gson = new Gson();
@@ -70,7 +71,7 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String comment = getStringParameter(request, "text-input", "");
+    String comment = getStringParameter(request, TEXT_INPUT_PARAMETER, "");
     long timestamp = System.currentTimeMillis();
     // Add comment entity to Datastore
     Entity commentEntity = new Entity(COMMENT_ENTITY);
