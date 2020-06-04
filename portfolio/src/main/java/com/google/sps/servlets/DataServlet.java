@@ -44,8 +44,8 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get number of comments to display
-    int numComments = getNumCommentsParameter(request);
-    if (numComments == -1) {
+    int numCommentsRequested = getNumCommentsParameter(request);
+    if (numCommentsRequested == -1) {
       response.setContentType("text/html");
       response.getWriter().println("Please enter a non-negative integer.");
       return;
@@ -56,7 +56,7 @@ public class DataServlet extends HttpServlet {
     List<String> comments = new ArrayList<>();
     int numCommentsAdded = 0;
     for (Entity entity : results.asIterable()) {
-      if (numCommentsAdded++ >= numComments) {
+      if (numCommentsAdded++ >= numCommentsRequested) {
         break;
       }
       comments.add((String) entity.getProperty(COMMENT_CONTENT_PROPERTY));
