@@ -209,7 +209,6 @@ function createListItemElement(comment) {
 /* Delete all comments, and update comments on page */
 function deleteComments() {
   fetch('/delete-data', { method: 'POST' }).then(response => {
-    const commentsList = document.getElementById("commentsContainer");
-    commentsList.innerHTML = '';
+    document.getElementById("commentsContainer").innerHTML = '';
   });
 }
