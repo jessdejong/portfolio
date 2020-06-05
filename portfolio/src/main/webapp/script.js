@@ -15,8 +15,8 @@
 
 /* Call initial javascript functions onload */
 function initializeAboutMePage() {
+  fetchLoginLogoutAndShowOrHideComments();
   updateNumCommentsDisplayed();
-  fetchLoginLogout();
 }
 
 
@@ -221,10 +221,22 @@ function deleteComments() {
   });
 }
 
+let userIsLoggedIn = false;
+
 /* Display the login logout display by fetching from server */
-function fetchLoginLogout() {
-  console.log("hello");
+function fetchLoginLogoutAndShowOrHideComments() {
   fetch('/account').then(response => response.text()).then(html => {
     document.getElementById("loginLogoutContainer").innerHTML = html;
-  });
+    userIsLoggedIn = html.includes("Logout ") ? true : false;
+  }).then(() => hideOrDisplayCommentsSection());
+}
+
+/* Display or hide the comments section depending on whether a user is logged in */
+function hideOrDisplayCommentsSection() {
+  const commentsSectionDiv = document.getElementById("commentsSection");
+  if (userIsLoggedIn) {
+    commentsSectionDiv.style.display = "block";
+  } else {
+    commentsSectionDiv.style.display = "none";
+  }
 }
