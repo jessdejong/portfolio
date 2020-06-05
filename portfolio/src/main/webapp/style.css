@@ -177,3 +177,11 @@ button, input[type="button"], input[type="submit"] {
   font-size: 1.2em;
   color: black;
 }
+
+
+/* Style Login Logout Display */
+#loginLogoutContainer {
+  position: absolute;
+  right: 5%;
+  top: 2%;
+}

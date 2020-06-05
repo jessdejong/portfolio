@@ -12,6 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
+/* Call initial javascript functions onload */
+function initializeAboutMePage() {
+  updateNumCommentsDisplayed();
+  fetchLoginLogout();
+}
+
+
 const TRANSFORM = 'transform';
 const FILTER = 'filter';
 const RESET = 'reset';
@@ -210,5 +218,13 @@ function createListItemElement(comment) {
 function deleteComments() {
   fetch('/delete-data', { method: 'POST' }).then(response => {
     document.getElementById("commentsContainer").innerHTML = '';
+  });
+}
+
+/* Display the login logout display by fetching from server */
+function fetchLoginLogout() {
+  console.log("hello");
+  fetch('/account').then(response => response.text()).then(html => {
+    document.getElementById("loginLogoutContainer").innerHTML = html;
   });
 }
