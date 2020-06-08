@@ -35,9 +35,9 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private static final String COMMENT_EMAIL_PROPERTY = "user-email";
   private static final String COMMENT_ENTITY = "Comment";
   private static final String COMMENT_CONTENT_PROPERTY = "content";
+  private static final String COMMENT_EMAIL_PROPERTY = "user-email";
   private static final String COMMENT_TIMESTAMP_PROPERTY = "timestamp";
   private static final String DEFAULT_STRING = "";
   private static final String NUM_COMMENTS_PARAMETER = "num-comments";
