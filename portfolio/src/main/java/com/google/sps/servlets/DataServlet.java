@@ -20,7 +20,10 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
+import com.google.sps.data.Comment;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+  private static final String COMMENT_EMAIL_PROPERTY = "user-email";
   private static final String COMMENT_ENTITY = "Comment";
   private static final String COMMENT_CONTENT_PROPERTY = "content";
   private static final String COMMENT_TIMESTAMP_PROPERTY = "timestamp";
@@ -42,6 +46,7 @@ public class DataServlet extends HttpServlet {
   private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
   private Gson gson = new Gson();
   private Query commentsQuery = new Query(COMMENT_ENTITY).addSort("timestamp", SortDirection.DESCENDING);
+  private UserService userService = UserServiceFactory.getUserService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -55,11 +60,12 @@ public class DataServlet extends HttpServlet {
 
     // Get comments from datastore, and add numCommentsRequested number of comments to comments list
     PreparedQuery results = datastore.prepare(commentsQuery);
-    List<String> comments = new ArrayList<>();
+    List<Comment> comments = new ArrayList<>();
     int numCommentsAdded = 0;
     if (numCommentsRequested != 0) {
       for (Entity entity : results.asIterable()) {
-        comments.add((String) entity.getProperty(COMMENT_CONTENT_PROPERTY));
+        comments.add(new Comment((String) entity.getProperty(COMMENT_CONTENT_PROPERTY),
+            (String) entity.getProperty(COMMENT_EMAIL_PROPERTY)));
         numCommentsAdded++;
         if (numCommentsAdded >= numCommentsRequested) {
           break;
@@ -76,10 +82,16 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String comment = getStringParameter(request, TEXT_INPUT_PARAMETER, DEFAULT_STRING);
+    // get User Email
+    if (!userService.isUserLoggedIn()) {
+      return;
+    }
+    String userEmail = userService.getCurrentUser().getEmail();
     // Add comment entity to Datastore
     Entity commentEntity = new Entity(COMMENT_ENTITY);
     commentEntity.setProperty(COMMENT_CONTENT_PROPERTY, comment);
     commentEntity.setProperty(COMMENT_TIMESTAMP_PROPERTY, System.currentTimeMillis());
+    commentEntity.setProperty(COMMENT_EMAIL_PROPERTY, userEmail);
     datastore.put(commentEntity);
     // Redirect to about me page on post
     response.sendRedirect("/index.html");
@@ -105,7 +117,7 @@ public class DataServlet extends HttpServlet {
   }
 
   /** Use Gson Library to convert list of comments to Json */
-  private String convertToJsonUsingGson(List<String> list) {
+  private <GenericType> String convertToJsonUsingGson(List<GenericType> list) {
     return gson.toJson(list);
   }
 }

@@ -19,7 +19,6 @@ function initializeAboutMePage() {
   updateNumCommentsDisplayed();
 }
 
-
 const TRANSFORM = 'transform';
 const FILTER = 'filter';
 const RESET = 'reset';
@@ -202,15 +201,15 @@ function updateNumCommentsDisplayed() {
     const commentsList = document.getElementById("commentsContainer");
     commentsList.innerHTML = '';
     for (let i = 0; i < comments.length; i++) {
-      commentsList.appendChild(createListItemElement(comments[i]));
+      commentsList.appendChild(createListItemCommentElement(comments[i].comment, comments[i].email));
     }
   });
 }
 
 /* Create a list item element that contains a comment text */
-function createListItemElement(comment) {
+function createListItemCommentElement(comment, email) {
   const listItemElement = document.createElement('li');
-  listItemElement.innerText = comment;
+  listItemElement.innerText = comment + " - " + email;
   return listItemElement;
 }
 

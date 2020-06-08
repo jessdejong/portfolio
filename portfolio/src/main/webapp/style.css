@@ -134,6 +134,10 @@ body {
   display: inline-block;
 }
 
+#commentsContainer {
+  text-align: left;
+}
+
 /* Styling the slideshow */
 .slideShowNavigation {
   background-color: white;
