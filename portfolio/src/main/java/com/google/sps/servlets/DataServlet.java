@@ -81,18 +81,16 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String comment = getStringParameter(request, TEXT_INPUT_PARAMETER, DEFAULT_STRING);
-    // get User Email
-    if (!userService.isUserLoggedIn()) {
-      return;
+    if (userService.isUserLoggedIn()) {
+      // Add comment entity to Datastore
+      String comment = getStringParameter(request, TEXT_INPUT_PARAMETER, DEFAULT_STRING);
+      String userEmail = userService.getCurrentUser().getEmail();
+      Entity commentEntity = new Entity(COMMENT_ENTITY);
+      commentEntity.setProperty(COMMENT_CONTENT_PROPERTY, comment);
+      commentEntity.setProperty(COMMENT_TIMESTAMP_PROPERTY, System.currentTimeMillis());
+      commentEntity.setProperty(COMMENT_EMAIL_PROPERTY, userEmail);
+      datastore.put(commentEntity);
     }
-    String userEmail = userService.getCurrentUser().getEmail();
-    // Add comment entity to Datastore
-    Entity commentEntity = new Entity(COMMENT_ENTITY);
-    commentEntity.setProperty(COMMENT_CONTENT_PROPERTY, comment);
-    commentEntity.setProperty(COMMENT_TIMESTAMP_PROPERTY, System.currentTimeMillis());
-    commentEntity.setProperty(COMMENT_EMAIL_PROPERTY, userEmail);
-    datastore.put(commentEntity);
     // Redirect to about me page on post
     response.sendRedirect("/index.html");
   }
