@@ -224,9 +224,18 @@ let userIsLoggedIn = false;
 
 /* Display the login logout display by fetching from server */
 function fetchLoginLogoutAndShowOrHideComments() {
-  fetch('/account').then(response => response.text()).then(html => {
-    document.getElementById("loginLogoutContainer").innerHTML = html;
-    userIsLoggedIn = html.includes("Logout ") ? true : false;
+  fetch('/account').then(response => response.json()).then(loginLogoutData => {
+    const loginLogoutContainer = document.getElementById("loginLogoutContainer");
+    // Display login-logout emails and urls - if email is undefined, user is currently logged out
+    if (loginLogoutData.email === undefined) {
+      loginLogoutContainer.innerHTML = "<p>Login <a href=\"" + loginLogoutData.url + "\">here</a>.</p>";
+      userIsLoggedIn = false;
+    }
+    else {
+      loginLogoutContainer.innerHTML = "<p>You're logged in as " + loginLogoutData.email + "!\nLogout <a href=\""
+          + loginLogoutData.url + "\">here</a>.</p>";
+      userIsLoggedIn = true;
+    }
   }).then(() => hideOrDisplayCommentsSection());
 }
 

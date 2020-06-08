@@ -28,19 +28,19 @@ public class LoginLogoutServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html");
+    response.setContentType("application/json");
 
+    // Build json in the form {"url": <url>, "email": <email>}
+    String json = "{";
     if (userService.isUserLoggedIn()) {
-      String userEmail = userService.getCurrentUser().getEmail();
-      String logoutUrl = userService.createLogoutURL(/*redirectUrlPostLogOut=*/ "/");
-
-      response.getWriter().println("<p>You're logged in as " + userEmail + "!</p>");
-      response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
+      json += "\"url\":" + "\"" + userService.createLogoutURL(/*redirectUrlPostLogOut=*/ "/") + "\",";
+      json += "\"email\":" + "\"" + userService.getCurrentUser().getEmail() + "\""; 
     }
     else {
-      String loginUrl = userService.createLoginURL(/*urlToRedirectToAfterUserLogsIn=*/ "/");
-
-      response.getWriter().println("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
+      json += "\"url\":" + "\"" + userService.createLoginURL(/*urlToRedirectToAfterUserLogsIn=*/ "/") + "\",";
+      json += "\"email\":null";
     }
+    json += "}";
+    response.getWriter().println(json);
   }
 }

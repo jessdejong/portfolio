@@ -115,7 +115,7 @@ public class DataServlet extends HttpServlet {
   }
 
   /** Use Gson Library to convert list of comments to Json */
-  private <GenericType> String convertToJsonUsingGson(List<GenericType> list) {
+  private String convertToJsonUsingGson(List<?> list) {
     return gson.toJson(list);
   }
 }
