@@ -43,10 +43,10 @@ public class DataServlet extends HttpServlet {
   private static final String NUM_COMMENTS_PARAMETER = "num-comments";
   private static final String TEXT_INPUT_PARAMETER = "text-input";
 
-  private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-  private Gson gson = new Gson();
-  private Query commentsQuery = new Query(COMMENT_ENTITY).addSort("timestamp", SortDirection.DESCENDING);
-  private UserService userService = UserServiceFactory.getUserService();
+  private final DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+  private final Gson gson = new Gson();
+  private final Query commentsQuery = new Query(COMMENT_ENTITY).addSort("timestamp", SortDirection.DESCENDING);
+  private final UserService userService = UserServiceFactory.getUserService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
