@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     <script src="script.js"></script>
   </head>
-  <body onload="updateNumCommentsDisplayed()">
+  <body onload="initializeAboutMePage()">
     <ul class="header">
       <img src="images/Profile_photo_Jess.jpg" alt="Profile photo of Jess" height="250" id="profilePicture">
       <h1>Jess's Portfolio</h1>
@@ -40,7 +40,8 @@
         </ul>
       </li>
     </ul>
-
+    <div id="loginLogoutContainer">
+    </div>
     <div id="content">
       <div class="speechBubble card">
         <div class="arrow"></div>
@@ -82,30 +83,32 @@
           </li>
         </ul>
       </div>
-      <h4>Join the Discussion!</h4>
-      <div class="speechBubble card">
-        <form action="/data" method="POST">
-          <textarea name="text-input" placeholder="Leave a message..." id="commentsTextArea"></textarea>
-          <input type="submit"/>
-        </form>
-      </div>
-      <div id="commentsHeaderDisplay">
-        <span>
-          <h4>Displaying up to</h4>
-        </span>
-        <span>
-          <input type="number" id="numCommentsInput" name="numCommentsInput" min="0" max="1000" value="5"
-              onchange="updateNumCommentsDisplayed()">
-        </span>
-        <span>
-          <h4>comments:</h4>
-        </span>
-      </div>
-      <div class="speechBubble card">
-        <ul id="commentsContainer"></ul>
-        <button onclick="deleteComments()">
-          Delete Comments?
-        </button>
+      <div id="commentsSection">
+        <h4>Join the Discussion!</h4>
+        <div class="speechBubble card">
+          <form action="/data" method="POST">
+            <textarea name="text-input" placeholder="Leave a message..." id="commentsTextArea"></textarea>
+            <input type="submit"/>
+          </form>
+        </div>
+        <div id="commentsHeaderDisplay">
+          <span>
+            <h4>Displaying up to</h4>
+          </span>
+          <span>
+            <input type="number" id="numCommentsInput" name="numCommentsInput" min="0" max="1000" value="5"
+                onchange="updateNumCommentsDisplayed()">
+          </span>
+          <span>
+            <h4>comments:</h4>
+          </span>
+        </div>
+        <div class="speechBubble card" id="commentsDisplay">
+          <ul id="commentsContainer"></ul>
+          <button onclick="deleteComments()">
+            Delete Comments?
+          </button>
+        </div>
       </div>
     </div>
   </body>

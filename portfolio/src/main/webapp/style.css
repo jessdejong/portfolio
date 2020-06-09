@@ -134,6 +134,10 @@ body {
   display: inline-block;
 }
 
+#commentsContainer {
+  text-align: left;
+}
+
 /* Styling the slideshow */
 .slideShowNavigation {
   background-color: white;
@@ -176,4 +180,12 @@ button, input[type="button"], input[type="submit"] {
   margin-bottom: 30px;
   font-size: 1.2em;
   color: black;
+}
+
+
+/* Style Login Logout Display */
+#loginLogoutContainer {
+  position: absolute;
+  right: 5%;
+  top: 2%;
 }
