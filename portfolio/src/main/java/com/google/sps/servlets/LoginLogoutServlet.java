@@ -16,6 +16,8 @@ package com.google.sps.servlets;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.gson.Gson;
+import com.google.sps.data.LoginLogoutData;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,23 +26,22 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/account")
 public class LoginLogoutServlet extends HttpServlet {
-  private UserService userService = UserServiceFactory.getUserService();
+  private final Gson gson = new Gson();
+  private final UserService userService = UserServiceFactory.getUserService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("application/json");
-
     // Build json in the form {"url": <url>, "email": <email>}
-    String json = "{";
+    LoginLogoutData loginLogoutData = new LoginLogoutData();
     if (userService.isUserLoggedIn()) {
-      json += "\"url\":" + "\"" + userService.createLogoutURL(/*redirectUrlPostLogOut=*/ "/") + "\",";
-      json += "\"email\":" + "\"" + userService.getCurrentUser().getEmail() + "\""; 
+      loginLogoutData.setURL(userService.createLogoutURL(/*redirectUrlPostLogOut=*/ "/"));
+      loginLogoutData.setEmail(userService.getCurrentUser().getEmail());
     }
     else {
-      json += "\"url\":" + "\"" + userService.createLoginURL(/*urlToRedirectToAfterUserLogsIn=*/ "/") + "\",";
-      json += "\"email\":null";
+      loginLogoutData.setURL(userService.createLoginURL(/*urlToRedirectToAfterUserLogsIn=*/ "/"));
     }
-    json += "}";
-    response.getWriter().println(json);
+
+    response.setContentType("application/json");
+    response.getWriter().println(gson.toJson(loginLogoutData));
   }
 }
