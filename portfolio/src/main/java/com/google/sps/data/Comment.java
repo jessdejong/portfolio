@@ -18,8 +18,8 @@ package com.google.sps.data;
  * Comment class, containing information for a single comment.
  */
 public class Comment {
-  private String comment;
-  private String email;
+  private final String comment;
+  private final String email;
 
   /** Constructor, initializes comment and email values */
   public Comment (String commentValue, String emailValue) {
