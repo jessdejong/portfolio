@@ -212,3 +212,28 @@ function deleteComments() {
     document.getElementById("commentsContainer").innerHTML = '';
   });
 }
+
+/* Handle displaying the chart of major-to-salary data */
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+  fetch('salary-data').then(response => response.json()).then((majorsToSalaries) => {
+    const data = new google.visualization.DataTable();
+    data.addColumn('string', 'Year');
+    data.addColumn('number', 'Median Starting Salary');
+    Object.keys(majorsToSalaries).forEach((major) => {
+      data.addRow([major, majorsToSalaries[major]]);
+    });
+
+    const options = {
+      'title': 'Median Starting Salary by Major',
+      'width': 500,
+      'height': 2200
+    };
+
+    const chart = new google.visualization.BarChart(
+        document.getElementById('salaryChartContainer'));
+    chart.draw(data, options);
+  });
+}

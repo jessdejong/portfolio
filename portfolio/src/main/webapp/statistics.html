@@ -5,11 +5,12 @@
     <title>Jess DeJong - STEP Intern</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="script.js"></script>
   </head>
   <body>
     <ul class="header">
-      <img src="images/Profile_photo_Jess.jpg" alt="Profile photo of Jess" height="250">
+      <img src="images/Profile_photo_Jess.jpg" alt="Profile photo of Jess" height="250" id="profilePicture">
       <h1>Jess's Portfolio</h1>
       <li>
         <a href="index.html">About Me</a>
@@ -44,21 +45,8 @@
       </li>
     </ul>
     <div id="content">
-      <h1>My Hobbies</h1>
-      <h2>In a Slide-show!</h2>
-      <div class="slideshowNavigation">
-        <button onclick="previousSlide()" id="previousButton">Previous</button>
-        <button onclick="randomSlide()" id="randomButton">Random</button>
-        <button onclick="nextSlide()" id="nextButton">Next</button>
-      </div>
-      <div id="slideshowContentContainer">
-        <img src="images/basketball.jpg" alt="Basketball Intramurals">
-      </div>
-      <div id="slideDescription">
-        <p>
-          Playing basketball with the Tennis Intramural Team!
-        </p>
-      </div>
+      <h2>Some statistics, in a Chart!</h2>
+      <div class="speechBubble card" id="salaryChartContainer"></div>
     </div>
   </body>
 </html>

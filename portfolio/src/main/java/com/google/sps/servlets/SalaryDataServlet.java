@@ -26,21 +26,21 @@ import javax.servlet.http.HttpServletResponse;
 /** Returns major-to-salary data as a JSON object, e.g. {"Computer Science": 52000, "Computer Engineering": 55000}] */
 @WebServlet("/salary-data")
 public class SalaryDataServlet extends HttpServlet {
-
-  private LinkedHashMap<String, Integer> majorSalaryData = new LinkedHashMap<>();
-
   private final Gson gson = new Gson();
+  private final LinkedHashMap<String, Integer> majorSalaryData = new LinkedHashMap<>();
 
   @Override
   public void init() {
     Scanner scanner = new Scanner(getServletContext().getResourceAsStream(
         "/WEB-INF/SalaryByMajor.csv"));
+    // Get rid of data header
+    scanner.nextLine();
     while (scanner.hasNextLine()) {
       String line = scanner.nextLine();
       String[] cells = line.split(",");
 
-      // Computer Science, $55000 => "Computer Science": 55000
-      majorSalaryData.put(cells[0], Integer.valueOf(/*remove $*/ cells[1].substring(1)));
+      // Computer Science, 55000 => "Computer Science": 55000
+      majorSalaryData.put(cells[0], Integer.valueOf(cells[1]));
     }
     scanner.close();
   }
