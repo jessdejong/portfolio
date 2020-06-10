@@ -31,18 +31,17 @@ public class SalaryDataServlet extends HttpServlet {
 
   @Override
   public void init() {
-    Scanner scanner = new Scanner(getServletContext().getResourceAsStream(
-        "/WEB-INF/SalaryByMajor.csv"));
-    // Get rid of data header
-    scanner.nextLine();
-    while (scanner.hasNextLine()) {
-      String line = scanner.nextLine();
-      String[] cells = line.split(",");
+    try (Scanner scanner = new Scanner(getServletContext().getResourceAsStream(
+        "/WEB-INF/SalaryByMajor.csv"))) {
+      scanner.nextLine();
+      while (scanner.hasNextLine()) {
+        String line = scanner.nextLine();
+        String[] cells = line.split(",");
 
-      // Computer Science, 55000 => "Computer Science": 55000
-      majorSalaryData.put(cells[0], Integer.valueOf(cells[1]));
+        // Computer Science, 55000 => "Computer Science": 55000
+        majorSalaryData.put(cells[0], Integer.valueOf(cells[1]));
+      }
     }
-    scanner.close();
   }
 
   @Override
