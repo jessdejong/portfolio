@@ -16,7 +16,7 @@ package com.google.sps.servlets;
 
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Scanner;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/salary-data")
 public class SalaryDataServlet extends HttpServlet {
   private final Gson gson = new Gson();
-  private final LinkedHashMap<String, Integer> majorSalaryData = new LinkedHashMap<>();
+  private final HashMap<String, Integer> majorSalaryData = new HashMap<>();
 
   @Override
   public void init() {
