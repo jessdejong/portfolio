@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Returns major-to-salary data as a JSON object, e.g. {"Computer Science": 52000, "Computer Engineering": 55000}] */
+/** Returns major-to-salary data as a JSON object, e.g. {"Computer Science": 52000, "Computer Engineering": 55000}. */
 @WebServlet("/salary-data")
 public class SalaryDataServlet extends HttpServlet {
   private final Gson gson = new Gson();
