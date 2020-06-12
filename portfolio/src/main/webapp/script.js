@@ -12,6 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
+/* Call initial javascript functions onload */
+function initializeAboutMePage() {
+  fetchLoginLogoutAndShowOrHideComments();
+  updateNumCommentsDisplayed();
+}
+
 const TRANSFORM = 'transform';
 const FILTER = 'filter';
 const RESET = 'reset';
@@ -194,15 +201,15 @@ function updateNumCommentsDisplayed() {
     const commentsList = document.getElementById("commentsContainer");
     commentsList.innerHTML = '';
     for (let i = 0; i < comments.length; i++) {
-      commentsList.appendChild(createListItemElement(comments[i]));
+      commentsList.appendChild(createListItemCommentElement(comments[i].comment, comments[i].email));
     }
   });
 }
 
 /* Create a list item element that contains a comment text */
-function createListItemElement(comment) {
+function createListItemCommentElement(comment, email) {
   const listItemElement = document.createElement('li');
-  listItemElement.innerText = comment;
+  listItemElement.innerText = comment + " - " + email;
   return listItemElement;
 }
 
@@ -211,6 +218,35 @@ function deleteComments() {
   fetch('/delete-data', { method: 'POST' }).then(response => {
     document.getElementById("commentsContainer").innerHTML = '';
   });
+}
+
+let userIsLoggedIn = false;
+
+/* Display the login logout display by fetching from server */
+function fetchLoginLogoutAndShowOrHideComments() {
+  fetch('/account').then(response => response.json()).then(loginLogoutData => {
+    const loginLogoutContainer = document.getElementById("loginLogoutContainer");
+    // Display login-logout emails and urls - if email is undefined, user is currently logged out
+    if (loginLogoutData.email === undefined) {
+      loginLogoutContainer.innerHTML = "<p>Login <a href=\"" + loginLogoutData.url + "\">here</a>.</p>";
+      userIsLoggedIn = false;
+    }
+    else {
+      loginLogoutContainer.innerHTML = "<p>You're logged in as " + loginLogoutData.email + "!\nLogout <a href=\""
+          + loginLogoutData.url + "\">here</a>.</p>";
+      userIsLoggedIn = true;
+    }
+  }).then(() => hideOrDisplayCommentsSection());
+}
+
+/* Display or hide the comments section depending on whether a user is logged in */
+function hideOrDisplayCommentsSection() {
+  const commentsSectionDiv = document.getElementById("commentsSection");
+  if (userIsLoggedIn) {
+    commentsSectionDiv.style.display = "block";
+  } else {
+    commentsSectionDiv.style.display = "none";
+  }
 }
 
 /* Handle displaying the chart of major-to-salary data */
