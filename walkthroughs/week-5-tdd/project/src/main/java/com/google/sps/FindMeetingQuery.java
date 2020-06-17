@@ -15,103 +15,123 @@
 package com.google.sps;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Set;
 
 public final class FindMeetingQuery {
+  private static final Event ENTIRE_DAY_EVENT = new Event("Entire Day Event", TimeRange.WHOLE_DAY, Arrays.asList());
+
   /** Returns a Collection of TimeRanges that satisfy the details of the MeetingRequest based on the events */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    // Get the invalid TimeRanges that don't have the required participants
-    List<TimeRange> invalidTimeRanges = getInvalidTimeRanges(events, request.getAttendees());
-    // Sort and merge the invalid TimeRanges, in order to easily distinguish the valid TimeRanges
-    Collections.sort(invalidTimeRanges, TimeRange.ORDER_BY_START);
-    invalidTimeRanges = mergeInvalidTimeRanges(invalidTimeRanges);
-    // Get TimeRanges that aren't invalid - these are the possible meeting times
-    Collection<TimeRange> meetingTimeRanges = getMeetingTimeRanges(invalidTimeRanges, request);
-    return meetingTimeRanges;
-  }
+    Collection<String> requiredAttendees = request.getAttendees();
+    Collection<String> optionalAttendees = request.getOptionalAttendees();
 
-  /** Method that goes through the collection of events for TimeRanges that are 'invalid' meeting times */
-  private List<TimeRange> getInvalidTimeRanges(Collection<Event> events, Collection<String> requiredAttendees) {
-    List<TimeRange> invalidTimeRanges = new ArrayList<>();
+    // Initialize PriorityQueue with start and end 'EventTime' nodes
+    PriorityQueue<EventTime> eventTimes = new PriorityQueue<>();
     for (Event event : events) {
-      if (doesEventHaveARequiredAttendee(event, requiredAttendees)) {
-        invalidTimeRanges.add(event.getWhen());
-      }
+      TimeRange eventTimeRange = event.getWhen();
+      eventTimes.add(new EventTime(eventTimeRange.start(), event, true));
+      eventTimes.add(new EventTime(eventTimeRange.end(), event, false));
     }
-    return invalidTimeRanges;
-  }
+    // Add EventTime nodes to the beginning and end of the day, to handle edge cases
+    eventTimes.add(new EventTime(ENTIRE_DAY_EVENT.getWhen().start(), ENTIRE_DAY_EVENT, true));
+    eventTimes.add(new EventTime(ENTIRE_DAY_EVENT.getWhen().end(), ENTIRE_DAY_EVENT, false));
 
-  /** Method that returns true if an event has a required attendee attending, false otherwise */
-  private boolean doesEventHaveARequiredAttendee(Event event, Collection<String> requiredAttendees) {
-    Set<String> busyAttendees = event.getAttendees();
-    for (String busyAttendee : busyAttendees) {
-      if (requiredAttendees.contains(busyAttendee)) {
-        return true;
-      }
-    }
-    return false;
-  }
+    // Keep track of potential meetings and the Attendees that are 'busy' while going through the PriorityQueue
+    Set<Event> ongoingEvents = new HashSet<Event>();
+    List<TimeRange> possibleMeetings = new ArrayList<>();
+    List<TimeRange> possibleMeetingsWithOptAttendees = new ArrayList<>();
 
-  /** Method that merges the invalid TimeRanges that overlap, and returns a List of these new time ranges */
-  private List<TimeRange> mergeInvalidTimeRanges(List<TimeRange> invalidTimeRanges) {
-    List<TimeRange> mergedInvalidTimeRanges = new ArrayList<>();
-    // Perform merge operation only if there is more than 1 invalid TimeRange
-    if (invalidTimeRanges.size() == 1) {
-      mergedInvalidTimeRanges.add(invalidTimeRanges.get(0));
-    }
-    else if (invalidTimeRanges.size() > 1) {
-      // Variables to track the start and end of the new TimeRange to create, that merges two or more TimeRanges
-      int startTime = invalidTimeRanges.get(0).start();
-      int endTime = invalidTimeRanges.get(0).end();
-      for (int i = 1; i < invalidTimeRanges.size(); i++) {
-        TimeRange currentTimeRange = invalidTimeRanges.get(i);
-        TimeRange previousTimeRange = invalidTimeRanges.get(i - 1);
-        if (currentTimeRange.overlaps(previousTimeRange)) {
-          // Update TimeRange start and end if two of the TimeRanges overlap
-          startTime = Math.min(startTime, Math.min(currentTimeRange.start(), previousTimeRange.start()));
-          endTime = Math.max(endTime, Math.max(currentTimeRange.end(), previousTimeRange.end()));
+    // 'Traverse' throughout the whole day, one EventTime at a time,
+    // and find potential blocks of time for Meetings
+    EventTime previousEventTime = eventTimes.poll();
+    ongoingEvents.add(previousEventTime.getEvent());
+    while (!eventTimes.isEmpty()) {
+      EventTime currentEventTime = eventTimes.poll();
+
+      // Check if any ongoing event conflicts with the optional or required attendees
+      boolean meetingConflictsReqAttendees = false;
+      boolean meetingConflictsOptAttendees = false;
+      for (Event event : ongoingEvents) {
+        for (String attendee : event.getAttendees()) {
+          if (requiredAttendees.contains(attendee)) {
+            meetingConflictsReqAttendees = true;
+            meetingConflictsOptAttendees = true;
+            break;
+          }
+          if (optionalAttendees.contains(attendee)) {
+            meetingConflictsOptAttendees = true;
+          }
         }
-        else {
-          // Add the merged TimeRange to List, and re-start cycle of creating a merged TimeRange
-          mergedInvalidTimeRanges.add(TimeRange.fromStartEnd(startTime, endTime, false));
-          startTime = currentTimeRange.start();
-          endTime = currentTimeRange.end();
+        if (meetingConflictsReqAttendees) break;
+      }
+
+      // Only add to the lists of possible TimeRanges if all required attendees are present,
+      // and all optional attendees if necessary. Make sure the TimeRange created is valid.
+      if (previousEventTime.getTime() != currentEventTime.getTime()) {
+        TimeRange meetingToAdd = TimeRange.fromStartEnd(previousEventTime.getTime(), currentEventTime.getTime(), false);
+        if (!meetingConflictsReqAttendees) {
+          possibleMeetings.add(meetingToAdd);
+        }
+        if (!meetingConflictsOptAttendees) {
+          possibleMeetingsWithOptAttendees.add(meetingToAdd);
         }
       }
-      // One merged TimeRange isn't yet added to the List
-      mergedInvalidTimeRanges.add(TimeRange.fromStartEnd(startTime, endTime, false));
-    }
 
-    return mergedInvalidTimeRanges;
-  }
-
-  /** Method to get all TimeRanges that are not part of the merged invalid TimeRanges, and meet the required duration */
-  private Collection<TimeRange> getMeetingTimeRanges(List<TimeRange> invalidTimeRanges, MeetingRequest request) {
-    Collection<TimeRange> meetingTimeRanges = new ArrayList<>();
-    // Add a temporary TimeRange at the end, in order to get the last valid meeting time
-    invalidTimeRanges.add(TimeRange.fromStartDuration(TimeRange.END_OF_DAY + 1, 0));
-    int startTime = 0;
-    for (int i = 0; i < invalidTimeRanges.size(); i++) {
-      TimeRange currentInvalidTimeRange = invalidTimeRanges.get(i);
-      // Meetings range from the end of the previous invalid TimeRange to the start of the current invalidTimeRange
-      TimeRange possibleMeeting = TimeRange.fromStartEnd(startTime, currentInvalidTimeRange.start(), false);
-      if (possibleMeeting.duration() >= request.getDuration()) {
-        meetingTimeRanges.add(possibleMeeting);
+      // Update the current events that are in 'progress' as I traverse through the day, as well as the PreviousEventTime
+      if (currentEventTime.isAStart()) {
+        ongoingEvents.add(currentEventTime.getEvent());
       }
-      // Set the new Meeting startTime to the end of the previous invalid TimeRange
-      startTime = currentInvalidTimeRange.end();
+      else {
+        ongoingEvents.remove(currentEventTime.getEvent());
+      }
+      previousEventTime = currentEventTime;
     }
-    return meetingTimeRanges;
+
+    getFinalizedTimeRanges(possibleMeetingsWithOptAttendees, request.getDuration());
+    getFinalizedTimeRanges(possibleMeetings, request.getDuration());
+
+    // Check if meetings were found where all optional attendees could attend, return
+    if (possibleMeetingsWithOptAttendees.isEmpty()) {
+      // Handle specific case where no possible meetings have a Required Attendee
+      if (requiredAttendees.isEmpty() && !possibleMeetings.isEmpty()
+          && possibleMeetings.get(0).start() == 0//TimeRange.WHOLE_DAY.start()
+          && possibleMeetings.get(0).end() == 1440) {//TimeRange.WHOLE_DAY.end()) {
+        return Arrays.asList();
+      }
+      return possibleMeetings;
+    }
+
+    return possibleMeetingsWithOptAttendees;
   }
 
-  private void debugList(Collection<TimeRange> list, String type) {
-    System.out.println(type.toUpperCase() + " LIST");
-    for (TimeRange t : list) {
-      System.out.println(t);
+  /** Method that merges adjacent TimeRange objects, and filters out objs that don't meet the required duration */
+  private void getFinalizedTimeRanges(List<TimeRange> timeRanges, long requiredDuration) {
+    // If there's only one TimeRange, just check if it meets the required duration
+    if (timeRanges.size() == 1 && timeRanges.get(0).duration() < requiredDuration) {
+      timeRanges.remove(0);
     }
-    System.out.println();
+    else if (timeRanges.size() > 1) {
+      for (int i = 1; i < timeRanges.size(); i++) {
+        TimeRange currentTimeRange = timeRanges.get(i);
+        TimeRange previousTimeRange = timeRanges.get(i - 1);
+        // Merge Adjacent TimeRanges
+        if (currentTimeRange.start() == previousTimeRange.end()) {
+          timeRanges.remove(i);
+          timeRanges.set(i - 1, TimeRange.fromStartEnd(previousTimeRange.start(), currentTimeRange.end(), false));
+          // Handle index offset caused by removal
+          i--;
+        }
+        // No longer need to merge TimeRanges, just make sure the last added TimeRange is 'long' enough
+        else if (timeRanges.get(timeRanges.size() - 1).duration() < requiredDuration) {
+          timeRanges.remove(timeRanges.size() - 1);
+        }
+      }
+    }
   }
 }
