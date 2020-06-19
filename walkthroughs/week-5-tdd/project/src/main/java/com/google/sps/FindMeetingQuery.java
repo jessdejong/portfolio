@@ -61,7 +61,6 @@ public final class FindMeetingQuery {
         for (String attendee : event.getAttendees()) {
           if (requiredAttendees.contains(attendee)) {
             meetingConflictsReqAttendees = true;
-            meetingConflictsOptAttendees = true;
             break;
           }
           if (optionalAttendees.contains(attendee)) {
@@ -78,7 +77,7 @@ public final class FindMeetingQuery {
         if (!meetingConflictsReqAttendees) {
           possibleMeetings.add(meetingToAdd);
         }
-        if (!meetingConflictsOptAttendees) {
+        if (!meetingConflictsOptAttendees && !meetingConflictsReqAttendees) {
           possibleMeetingsWithOptAttendees.add(meetingToAdd);
         }
       }
